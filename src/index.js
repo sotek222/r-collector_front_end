@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   fetchUser();
+
   function fetchRecords(url) {
     return fetch(url)
     .then(res => res.json())
@@ -42,13 +43,29 @@ document.addEventListener('DOMContentLoaded', () => {
         renderRecord(record)
       })
     })
+  };
+
+  function renderCollection(){
+    fetchRecords(collectionUrl)
+    .then(collections => {
+      collections.forEach(collection => {
+        recordsContainer.innerHTML += `
+        <div>
+          <h1>${collection.record.title}</h1>
+          <h2>${collection.record.artist}</h2>
+          <h3>${collection.record.genre}</h3>
+          <img src=${collection.record.image_url}>
+          <button data-collection-id=${collection.id}>Remove from Collection</button>
+        </div>
+        `
+      })
+    })
   }
 
   recordsContainer.addEventListener('click', (e) => {
     if(e.target.innerText === "Add to Collection") {
       let recordId = parseInt(e.target.dataset.recordId);
-      console.log("Record id:", typeof recordId);
-      console.log("User Id:", typeof userId);
+
 
       fetch(collectionUrl, {
         method: "POST",
@@ -61,13 +78,18 @@ document.addEventListener('DOMContentLoaded', () => {
           record_id: recordId
         })
       })
+    } else if(e.target.innerText === "Remove from Collection"){
+      let collectionId = e.target.dataset.collectionId
+      fetch(`${collectionUrl}/${collectionId}`, {
+        method: "DELETE"
+      })
     }
   })
 
   navBar.addEventListener('click', (e) => {
     if (e.target.innerText === 'My Collection') {
-      // console.log("IM IN THE IF")
       recordsContainer.innerHTML = '';
+      renderCollection();
     } else if (e.target.innerText === 'All Records') {
       renderAllRecords();
     }
