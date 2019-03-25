@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const recordsUrl = "http://localhost:3000/records"
   const userUrl = "http://localhost:3000/users"
   const collectionUrl = "http://localhost:3000/collections"
-  const recordsContainer = document.querySelector('.records-container')
+  const recordsContainer = document.querySelector('.records-container');
+  const navBar = document.querySelector('.nav-bar');
   let userId;
 
   function fetchUser(){
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   function renderAllRecords(){
+    recordsContainer.innerHTML = '';
     fetchRecords(recordsUrl)
     .then(records => {
       records.forEach(record => {
@@ -61,6 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     }
   })
+
+  navBar.addEventListener('click', (e) => {
+    if (e.target.innerText === 'My Collection') {
+      // console.log("IM IN THE IF")
+      recordsContainer.innerHTML = '';
+    } else if (e.target.innerText === 'All Records') {
+      renderAllRecords();
+    }
+  })
+
 
 renderAllRecords();
 
