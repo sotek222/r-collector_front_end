@@ -7,9 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const navBar = document.querySelector('.nav-bar');
   const formDiv = document.querySelector('.form-container');
   const recordsContainer = document.querySelector('.records-container');
+  const searchBar = document.getElementById('search-bar')
   const body = document.querySelector('body');
 
   let userId;
+  let filtered;
 
 //----------------- FETCHES ------------------------------//
 
@@ -53,6 +55,21 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(res => res.json())
   };
 
+  function postRecord(title, artist, genre, image){
+    return fetch(recordsUrl, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: title,
+        artist: artist,
+        genre: genre,
+        image_url: image
+      })
+    }).then(resp => resp.json())
+  };
 // ---------------- RENDERS -------------------------//
 
 
@@ -138,6 +155,13 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  function renderFilteredRecords(filtered){
+    recordsContainer.innerHTML = '';
+    filtered.forEach(record => {
+      renderRecord(record)
+    })
+  };
+
 //-----------EVENT LISTENERS------------------------//
 
   renderLogin();
@@ -168,22 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  function postRecord(title, artist, genre, image){
-    return fetch(recordsUrl, {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title: title,
-        artist: artist,
-        genre: genre,
-        image_url: image
-      })
-    }).then(resp => resp.json())
-  }
-
   formDiv.addEventListener('click', (e) => {
     e.preventDefault();
     const title = document.querySelector(".record-title").value;
@@ -191,23 +199,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const genre = document.querySelector(".record-genre").value;
     const image = document.querySelector(".record-img").value;
 
-
-
     if (e.target.innerText === "Create Record") {
-      console.log("title", title);
-      console.log("artist", artist);
-      console.log("genre", genre);
-      console.log("image", image);
-
-      console.log("The image type is:", typeof image);
       postRecord(title, artist, genre, image).then(record => renderRecord(record))
     }
   });
 
+  searchBar.addEventListener('input', (e) => {
+    let searchInput = searchBar.value.toLowerCase()
+      fetchRecords(recordsUrl)
+      .then(records => {
+        filtered = records.filter(record => {
+          return (record.title.toLowerCase().includes(searchInput) || record.artist.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)) || record.genre.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)))
+        })
 
-
-
-
-
+        renderFilteredRecords(filtered)
+      })
+  });
 
 });
