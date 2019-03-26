@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const navBar = document.querySelector('.nav-bar');
   let userId;
 
+//----------------- FETCHES ------------------------------//
+
   function fetchUser(){
     fetch(userUrl)
     .then(resp => resp.json())
@@ -17,10 +19,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   fetchUser();
 
+  function removeFromCollection(collectionId){
+    return fetch(`${collectionUrl}/${collectionId}`, {
+      method: "DELETE"
+    })
+  }
+
+  function postToCollection(userId, recordId){
+    fetch(collectionUrl, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        record_id: recordId
+      })
+    })
+  }
+
   function fetchRecords(url) {
     return fetch(url)
     .then(res => res.json())
   }
+
+// ---------------- RENDERS -------------------------//
+
 
   function renderRecord(record) {
     recordsContainer.innerHTML += `
@@ -28,12 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
       <h1>${record.title}</h1>
       <h2>${record.artist}</h2>
       <h3>${record.genre}</h3>
-      <img src=${record.image_url}>
+      <img data-user-id=${userId} data-record-id=${record.id} src=${record.image_url}>
       <button data-user-id=${userId} data-record-id=${record.id}>Add to Collection</button>
     </div>
     `
   }
-
 
   function renderAllRecords(){
     recordsContainer.innerHTML = '';
@@ -62,26 +86,22 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
+
+//-----------EVENT LISTENERS------------------------//
+
   recordsContainer.addEventListener('click', (e) => {
     if(e.target.innerText === "Add to Collection") {
       let recordId = parseInt(e.target.dataset.recordId);
 
+      postToCollection(userId, recordId)
 
-      fetch(collectionUrl, {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          record_id: recordId
-        })
-      })
     } else if(e.target.innerText === "Remove from Collection"){
       let collectionId = e.target.dataset.collectionId
-      fetch(`${collectionUrl}/${collectionId}`, {
-        method: "DELETE"
+
+      removeFromCollection(collectionId)
+      .then(() => {
+        let recordDiv = e.target.parentNode;
+        recordDiv.remove();
       })
     }
   })
@@ -95,8 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 
-
 renderAllRecords();
-
 
 })
