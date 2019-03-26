@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navBar.style.display = "block";
     console.log("Current User:", userId);
     recordsContainer.innerHTML = '';
+    renderForm()
     fetchRecords(recordsUrl)
     .then(records => {
       records.forEach(record => {
@@ -120,6 +121,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     })
   };
+
+  function renderForm(){
+    const formDiv = document.querySelector('.form-container');
+    formDiv.innerHTML = `
+    <form class="new-record-form" method="post">
+      <h3>Add to the library</h3>
+      <input type="text" name="title" value="" placeholder="Title">
+      <input type="text" name="artist" value="" placeholder="Artist">
+      <input type="text" name="genre" value="" placeholder="Genre">
+      <input type="text" name="img" value="" placeholder="Image Url">
+      <button type="submit" name="button">Create Record</button>
+    </form>
+    `;
+  }
 
 //-----------EVENT LISTENERS------------------------//
 
