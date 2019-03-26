@@ -70,8 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     }).then(resp => resp.json())
   };
-// ---------------- RENDERS -------------------------//
 
+// ---------------- RENDERS -------------------------//
 
   function renderRecord(record) {
     recordsContainer.innerHTML += `
@@ -87,9 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderAllRecords(){
     navBar.style.display = "block";
-    console.log("Current User:", userId);
+    recordsContainer.style.display = "block";
     recordsContainer.innerHTML = '';
-    renderForm()
+
+    renderForm();
+
     fetchRecords(recordsUrl)
     .then(records => {
       records.forEach(record => {
@@ -119,19 +121,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderLogin(){
     navBar.style.display = 'none';
-    const landing = document.createElement('div')
+    recordsContainer.style.display = 'none';
+
+    const landing = document.createElement('div');
     landing.setAttribute('class', 'landing');
     landing.innerHTML = `
     <h1>R-Collector</h1>
     <h3>Log-in</h3>
     <input id="log-in" placeholder="Enter Email"></input>
     <button>Log-in</button>
-    `
-    body.appendChild(landing)
+    `;
+
+    body.appendChild(landing);
 
     landing.addEventListener('click', e => {
       if (e.target.innerText === "Log-in") {
         let logInInput = document.querySelector('#log-in').value;
+
         postUser(logInInput)
         .then(user => {
           userId = user.id;
