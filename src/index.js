@@ -3,9 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const recordsUrl = "http://localhost:3000/records";
   const userUrl = "http://localhost:3000/users";
   const collectionUrl = "http://localhost:3000/collections";
-  const recordsContainer = document.querySelector('.records-container');
+
   const navBar = document.querySelector('.nav-bar');
+  const formDiv = document.querySelector('.form-container');
+  const recordsContainer = document.querySelector('.records-container');
   const body = document.querySelector('body');
+
   let userId;
 
 //----------------- FETCHES ------------------------------//
@@ -32,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function postToCollection(userId, recordId){
-    fetch(collectionUrl, {
+    return fetch(collectionUrl, {
       method: "POST",
       headers: {
         'Accept': 'application/json',
@@ -123,14 +126,13 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function renderForm(){
-    const formDiv = document.querySelector('.form-container');
     formDiv.innerHTML = `
     <form class="new-record-form" method="post">
       <h3>Add to the library</h3>
-      <input type="text" name="title" value="" placeholder="Title">
-      <input type="text" name="artist" value="" placeholder="Artist">
-      <input type="text" name="genre" value="" placeholder="Genre">
-      <input type="text" name="img" value="" placeholder="Image Url">
+      <input class="record-title" type="text" name="title" value="" placeholder="Title">
+      <input class="record-artist" type="text" name="artist" value="" placeholder="Artist">
+      <input class="record-genre" type="text" name="genre" value="" placeholder="Genre">
+      <input class="record-img" type="text" name="img" value="" placeholder="Image Url">
       <button type="submit" name="button">Create Record</button>
     </form>
     `;
@@ -166,6 +168,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  function postRecord(title, artist, genre, image){
+    return fetch(recordsUrl, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: title,
+        artist: artist,
+        genre: genre,
+        image_url: image
+      })
+    }).then(resp => resp.json())
+  }
+
+  formDiv.addEventListener('click', (e) => {
+    e.preventDefault();
+    const title = document.querySelector(".record-title").value;
+    const artist = document.querySelector(".record-artist").value;
+    const genre = document.querySelector(".record-genre").value;
+    const image = document.querySelector(".record-img").value;
+
+
+
+    if (e.target.innerText === "Create Record") {
+      console.log("title", title);
+      console.log("artist", artist);
+      console.log("genre", genre);
+      console.log("image", image);
+
+      console.log("The image type is:", typeof image);
+      postRecord(title, artist, genre, image).then(record => renderRecord(record))
+    }
+  });
 
 
 
