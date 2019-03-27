@@ -36,6 +36,7 @@
 
 
 .records-container {
+  border-top: solid 50px;
   width: 75vw;
   display: flex;
   flex-flow: row wrap;
