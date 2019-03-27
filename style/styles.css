@@ -75,8 +75,16 @@
 }
 
 .record-button-css {
+  border-color: #554544;
   width: 100%;
   margin-top: auto;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
+  background-color: #554544;
+  color: white;
+}
+
+.record-button-css:hover {
+  border-color: #453534;
+  background-color: #453534;
 }
