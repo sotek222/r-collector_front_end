@@ -1,0 +1,78 @@
+
+.navigation {
+  float: left;
+}
+
+.form-control.mr-sm-2 {
+  width: 100%;
+}
+
+.text-white.h1 {
+  font-family: 'Righteous';
+  font-size: 4em;
+  margin-left: 54%;
+}
+
+.nav-bar {
+  width: 100%;
+  position: fixed;
+}
+
+.background-img {
+  -webkit-background-size:cover;
+  -moz-background-size:cover;
+  -o-background-size:cover;
+  background-size:cover;
+  margin-left: 50%;
+  position:fixed;
+  z-index: -1;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+	from{transform:rotate(0deg)}
+	to{transform:rotate(360deg)}
+}
+
+
+.records-container {
+  width: 75vw;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.record-card {
+  width: 300px;
+  margin: 20px;
+  background-color: #f2cc0e;
+  box-shadow: 10px 10px 20px 0px #5c5c5c;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.record-image-css {
+  width: 100%;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.record-title-css {
+  background-color: #f2cc0e;
+  color: black;
+}
+
+.record-artist-css {
+  background-color: #f2cc0e;
+  color: black;
+}
+
+.record-genre-css {
+  background-color: #f2cc0e;
+  color: black;
+}
+
+.record-button-css {
+  width: 100%;
+  margin-top: auto;
+}

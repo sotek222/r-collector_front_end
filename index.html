@@ -3,45 +3,61 @@
   <head>
     <meta charset="utf-8">
     <title>R-Collector</title>
+    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+    <link rel="stylesheet" href="style/styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script type="text/javascript" src="src/index.js"></script>
   </head>
   <body>
-      <div class="nav-bar">
-        <span class="my-collection">My Collection</span>
-        <span class="all-records">All Records</span>
-        <button id="modal" type="button" name="create" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add to our Library</button>
-        <h1>Hello Record Collectors</h1>
-        <div class="search-field">
-          <input id="search-bar" type="text" name="" value="" placeholder="Search">
-        </div>
-        <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <form class="new-record-form" method="post">
-                <div class="modal-header">
-                  <h5>Add to the library</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <input class="record-title" type="text" name="title" value="" placeholder="Title">
-                  <input class="record-artist" type="text" name="artist" value="" placeholder="Artist">
-                  <input class="record-genre" type="text" name="genre" value="" placeholder="Genre">
-                  <input class="record-img" type="text" name="img" value="" placeholder="Image Url">
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button class="btn btn-primary" type="submit" name="button">Create Record</button>
-                </div>
-              </form>
+    <img class="background-img" src="https://cdn.pixabay.com/photo/2012/04/13/13/23/disc-32390_960_720.png" alt="">
+    <div class="nav-bar">
+      <div class="pos-f-t">
+        <div class="collapse" id="navbarToggleExternalContent">
+          <div class="bg-dark p-4">
+            <div class="navigation">
+              <span class="my-collection btn btn-primary">My Collection</span>
+              <span class="all-records btn btn-primary">All Records</span>
+              <button id="modal-button" type="button" name="create" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add to our Library</button>
+              <div class="search-field">
+                <input class="search form-control mr-sm-2" id="search-bar" type="search" name="" value="" placeholder="Search">
+              </div>
+            </div>
+              <h1 class="text-white h1">R-Collector</h1>
             </div>
           </div>
+      </div>
+        <nav class="navbar navbar-dark bg-dark">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </nav>
+    </div>
+
+    <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form class="new-record-form" method="post">
+            <div class="modal-header">
+              <h5>Add to the library</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input class="record-title" type="text" name="title" value="" placeholder="Title">
+              <input class="record-artist" type="text" name="artist" value="" placeholder="Artist">
+              <input class="record-genre" type="text" name="genre" value="" placeholder="Genre">
+              <input class="record-img" type="text" name="img" value="" placeholder="Image Url">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button class="btn btn-primary" type="submit" name="button" data-dismiss="modal">Create Record</button>
+            </div>
+          </form>
         </div>
       </div>
-      <div class="records-container">
-      </div>
+    </div>
+    <div class="records-container"></div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

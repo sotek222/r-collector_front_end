@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const formDiv = document.querySelector('.new-record-form');
   const recordsContainer = document.querySelector('.records-container');
   const searchBar = document.getElementById('search-bar');
-  const modalBtn = document.getElementById('modal');
+  const modalBtn = document.getElementById('modal-button');
   const body = document.querySelector('body');
 
   let userId;
@@ -76,19 +76,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderRecord(record) {
     recordsContainer.innerHTML += `
-    <div>
-      <h1>${record.title}</h1>
-      <h2>${record.artist}</h2>
-      <h3>${record.genre}</h3>
-      <img data-user-id=${userId} data-record-id=${record.id} src=${record.image_url}>
-      <button data-user-id=${userId} data-record-id=${record.id}>Add to Collection</button>
+    <div class="record-card">
+    <img class="record-image-css" data-user-id=${userId} data-record-id=${record.id} src=${record.image_url}>
+      <h1 class="record-title-css">${record.title}</h1>
+      <h2 class="record-artist-css">${record.artist}</h2>
+      <h3 class="record-genre-css">${record.genre}</h3>
+      <button class="record-button-css" data-user-id=${userId} data-record-id=${record.id}>Add to Collection</button>
     </div>
     `
   };
 
   function renderAllRecords(){
     navBar.style.display = "block";
-    recordsContainer.style.display = "block";
+    recordsContainer.style.display = "flex";
     recordsContainer.innerHTML = '';
 
     fetchRecords(recordsUrl)
@@ -105,12 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
       collections.forEach(collection => {
         if (collection.user_id === userId) {
           recordsContainer.innerHTML += `
-          <div>
-          <h1>${collection.record.title}</h1>
-          <h2>${collection.record.artist}</h2>
-          <h3>${collection.record.genre}</h3>
-          <img src=${collection.record.image_url}>
-          <button data-collection-id=${collection.id}>Remove from Collection</button>
+          <div class="record-card">
+          <img class="record-image-css" src=${collection.record.image_url}>
+          <h1 class="record-title-css">${collection.record.title}</h1>
+          <h2 class="record-artist-css">${collection.record.artist}</h2>
+          <h3 class="record-genre-css">${collection.record.genre}</h3>
+          <button class="record-button-css" data-collection-id=${collection.id}>Remove from Collection</button>
           </div>
           `
         }
