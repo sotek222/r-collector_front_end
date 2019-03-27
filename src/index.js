@@ -5,9 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const collectionUrl = "http://localhost:3000/collections";
 
   const navBar = document.querySelector('.nav-bar');
-  const formDiv = document.querySelector('.form-container');
+  const formDiv = document.querySelector('.new-record-form');
   const recordsContainer = document.querySelector('.records-container');
-  const searchBar = document.getElementById('search-bar')
+  const searchBar = document.getElementById('search-bar');
+  const modalBtn = document.getElementById('modal');
   const body = document.querySelector('body');
 
   let userId;
@@ -90,8 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
     recordsContainer.style.display = "block";
     recordsContainer.innerHTML = '';
 
-    renderForm();
-
     fetchRecords(recordsUrl)
     .then(records => {
       records.forEach(record => {
@@ -147,19 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     })
   };
-
-  function renderForm(){
-    formDiv.innerHTML = `
-    <form class="new-record-form" method="post">
-      <h3>Add to the library</h3>
-      <input class="record-title" type="text" name="title" value="" placeholder="Title">
-      <input class="record-artist" type="text" name="artist" value="" placeholder="Artist">
-      <input class="record-genre" type="text" name="genre" value="" placeholder="Genre">
-      <input class="record-img" type="text" name="img" value="" placeholder="Image Url">
-      <button type="submit" name="button">Create Record</button>
-    </form>
-    `;
-  }
 
   function renderFilteredRecords(filtered){
     recordsContainer.innerHTML = '';
@@ -221,5 +207,4 @@ document.addEventListener('DOMContentLoaded', () => {
         renderFilteredRecords(filtered)
       })
   });
-
 });
