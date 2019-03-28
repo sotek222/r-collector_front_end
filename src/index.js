@@ -89,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderAllRecords(){
     navBar.style.display = "block";
     recordsContainer.style.display = "flex";
-    piano.style.display = "none";
     recordsContainer.innerHTML = '';
 
     fetchRecords(recordsUrl)
@@ -129,7 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
     <h1 class="login-title">R-Collector</h1>
     <h3 class="login-div">Log-in</h3>
     <input class="login-div" id="log-in" placeholder="Enter Email"></input>
-    <button class="login-div">Log-in</button>
+    <button class="login-div">Log-in</button><br>
+    <iframe class="piano" src="http://www.freeonlinegames.com/embed/2681" width="500" height="300" frameborder="no" scrolling="no"></iframe>
     `;
 
     body.appendChild(landing);
