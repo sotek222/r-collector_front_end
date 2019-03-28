@@ -80,10 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
       <h1 class="record-title-css">${record.title}</h1>
       <h2 class="record-artist-css">${record.artist}</h2>
       <h3 class="record-genre-css">${record.genre}</h3>
-      <button class="record-button-css" data-user-id=${userId} data-record-id=${record.id}>Add to Collection</button>
+      <button id="modal-success-button" class="record-button-css" data-user-id=${userId} data-record-id=${record.id} data-toggle="modal" data-target="#succesModal">Add to Collection</button>
     </div>
     `
   };
+
 
   function renderAllRecords(){
     navBar.style.display = "block";
@@ -160,8 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
   recordsContainer.addEventListener('click', (e) => {
     if(e.target.innerText === "Add to Collection") {
       let recordId = parseInt(e.target.dataset.recordId);
-
+      let sucessModal = document.getElementById('succesModal')
       postToCollection(userId, recordId)
+
+      setTimeout(function(){
+        succesModal.click()
+      }, 1500)
 
     } else if(e.target.innerText === "Remove from Collection"){
       let collectionId = e.target.dataset.collectionId
@@ -192,6 +197,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (e.target.innerText === "Create Record") {
       postRecord(title, artist, genre, image).then(record => renderRecord(record))
+      document.querySelector(".record-title").value = "";
+      document.querySelector(".record-artist").value = "";
+      document.querySelector(".record-genre").value = "";
+      document.querySelector(".record-img").value = "";
     }
   });
 

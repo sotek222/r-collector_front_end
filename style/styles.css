@@ -100,3 +100,20 @@
   font-size: 2em;
   margin-left: 30px;
 }
+
+.success-dialog {
+  margin-left: 41%;
+  margin-top: 15%;
+}
+
+.success-content {
+  width: 40%;
+  padding-bottom: 6%;
+}
+/* CHECK START */
+
+svg {
+  width: 100px;
+  display: block;
+  margin: 40px auto 0;
+}
