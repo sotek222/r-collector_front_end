@@ -124,10 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const landing = document.createElement('div');
     landing.setAttribute('class', 'landing');
     landing.innerHTML = `
-    <h1>R-Collector</h1>
-    <h3>Log-in</h3>
-    <input id="log-in" placeholder="Enter Email"></input>
-    <button>Log-in</button>
+    <h1 class="login-title">R-Collector</h1>
+    <h3 class="login-div">Log-in</h3>
+    <input class="login-div" id="log-in" placeholder="Enter Email"></input>
+    <button class="login-div">Log-in</button>
     `;
 
     body.appendChild(landing);
