@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function removeFromCollection(collectionId){
-    console.log("THE CURRENT COLLECTION:", collectionId);
     return fetch(`${collectionUrl}/${collectionId}`, {
       method: "DELETE"
     })
