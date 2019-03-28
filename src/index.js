@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchBar = document.getElementById('search-bar');
   const modalBtn = document.getElementById('modal-button');
   const body = document.querySelector('body');
+  const piano = document.querySelector('.piano');
 
   let userId;
   let filtered;
@@ -85,10 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
     `
   };
 
-
   function renderAllRecords(){
     navBar.style.display = "block";
     recordsContainer.style.display = "flex";
+    piano.style.display = "none";
     recordsContainer.innerHTML = '';
 
     fetchRecords(recordsUrl)

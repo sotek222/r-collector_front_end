@@ -91,14 +91,18 @@
 .login-title {
   font-family: 'Righteous';
   font-size: 8.75em;
-  margin-bottom: .75em;
-  margin-left: .25
+  margin-left: .25;
 }
 
 .login-div {
   font-family: 'Righteous';
   font-size: 2em;
   margin-left: 30px;
+}
+
+.piano {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .success-dialog {
