@@ -144,7 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e => {
       password.push(e.key)
       console.log(password)
-      if (password.join('') === "piano") {
+      if(e.key === "Enter") {
+        password = []
+      } else if (password.join('') === "piano") {
         landing.lastElementChild.remove()
         landing.innerHTML += `<iframe class="piano" src="http://www.freeonlinegames.com/embed/2681" width="500" height="300" frameborder="no" scrolling="no"></iframe>`
         password = []
