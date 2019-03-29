@@ -10,7 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchBar = document.getElementById('search-bar');
   const modalBtn = document.getElementById('modal-button');
   const body = document.querySelector('body');
-  const piano = document.querySelector('.piano');
+  const piano = document.querySelectorAll('.piano');
+  const drums = document.querySelectorAll('.drums');
+
 
   let userId;
   let filtered;
@@ -129,10 +131,30 @@ document.addEventListener('DOMContentLoaded', () => {
     <h3 class="login-div">Log-in</h3>
     <input class="login-div" id="log-in" placeholder="Enter Email"></input>
     <button class="login-div">Log-in</button><br>
-    <iframe class="piano" src="http://www.freeonlinegames.com/embed/2681" width="500" height="300" frameborder="no" scrolling="no"></iframe>
+    <div></div>
+    <!-- <iframe></iframe> -->
     `;
-
+    // iFrame.style.display = 'none';
     body.appendChild(landing);
+
+    //music box
+
+    let password = [];
+    let iFrame = document.querySelectorAll('iframe')
+    document.addEventListener('keydown', (e => {
+      password.push(e.key)
+      console.log(password)
+      if (password.join('') === "piano") {
+        landing.lastElementChild.remove()
+        landing.innerHTML += `<iframe class="piano" src="http://www.freeonlinegames.com/embed/2681" width="500" height="300" frameborder="no" scrolling="no"></iframe>`
+        password = []
+      } else if(password.join('') === "drums") {
+        landing.lastElementChild.remove()
+        landing.innerHTML += `<iframe class="drums" src="http://www.freeonlinegames.com/embed/127254" width="500" height="500" frameborder="no" scrolling="no"></iframe>`
+        password = []
+      }
+
+    }))
 
     landing.addEventListener('click', e => {
       if (e.target.innerText === "Log-in") {
