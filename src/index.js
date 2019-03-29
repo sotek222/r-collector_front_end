@@ -154,6 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
         landing.lastElementChild.remove()
         landing.innerHTML += `<iframe class="drums" src="http://www.freeonlinegames.com/embed/127254" width="500" height="500" frameborder="no" scrolling="no"></iframe>`
         password = []
+      } else if(password.join('') === "games") {
+        landing.lastElementChild.remove()
+        landing.innerHTML += `<iframe class="games" src="http://www.freeonlinegames.com/embed/124792" width="800" height="440" frameborder="no" scrolling="no"></iframe>`
       }
 
     }))
