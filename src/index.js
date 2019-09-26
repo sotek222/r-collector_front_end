@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ---------------- RENDERS -------------------------//
 
   function renderRecord({id, image_url, title, artist, genre}) {
-    recordsContainer.insertAdjacentHTML('beforeend', `
+    const html = `
       <div class="flip-card">
         <div class="flip-card-inner">
           <div class="flip-card-front">
@@ -99,7 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </div>
-    `)
+    `;
+
+    recordsContainer.insertAdjacentHTML('beforeend', html)
   };
 
   function renderAllRecords(){
@@ -120,15 +122,30 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(collections => {
       collections.forEach(collection => {
         if (collection.user_id === userId) {
-          recordsContainer.innerHTML += `
-          <div class="record-card">
-          <img class="record-image-css" src=${collection.record.image_url}>
-          <h1 class="record-title-css">${collection.record.title}</h1>
-          <h2 class="record-artist-css">${collection.record.artist}</h2>
-          <h3 class="record-genre-css">${collection.record.genre}</h3>
-          <button class="record-button-css" data-collection-id=${collection.id}>Remove from Collection</button>
-          </div>
-          `
+          const html = `
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <img class="card-image" src=${collection.record.image_url} alt="Album Art" data-user-id=${userId} style="width:300px;height:300px;">
+                </div>
+                <div class="flip-card-back">
+                  <h1 class="record-title">${collection.record.title}</h1>
+                  <h2 class="record-artist">${collection.record.artist}</h2>
+                  <h3 class="record-genre">${collection.record.genre}</h3>
+                  <button 
+                    id="modal-success-button" 
+                    class="record-button" 
+                    data-user-id=${userId} 
+                    data-record-id=${collection.record.id} 
+                    data-toggle="modal" 
+                    data-target="#succesModal">
+                    Add to Collection
+                  </button>
+                  </div>
+              </div>
+            </div>`;
+
+          recordsContainer.insertAdjacentHTML("beforeend", html);
         }
       })
     })
@@ -154,7 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //music box
 
     let password = [];
-    let iFrame = document.querySelectorAll('iframe')
+    let iFrame = document.querySelectorAll('iframe');
+
     document.addEventListener('keydown', (e => {
       password.push(e.key)
       console.log(password)
