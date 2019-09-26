@@ -76,16 +76,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ---------------- RENDERS -------------------------//
 
-  function renderRecord(record) {
-    recordsContainer.innerHTML += `
-    <div class="record-card">
-    <img class="record-image-css" data-user-id=${userId} data-record-id=${record.id} src=${record.image_url}>
-      <h1 class="record-title-css">${record.title}</h1>
-      <h2 class="record-artist-css">${record.artist}</h2>
-      <h3 class="record-genre-css">${record.genre}</h3>
-      <button id="modal-success-button" class="record-button-css" data-user-id=${userId} data-record-id=${record.id} data-toggle="modal" data-target="#succesModal">Add to Collection</button>
-    </div>
-    `
+  function renderRecord({id, image_url, title, artist, genre}) {
+    recordsContainer.insertAdjacentHTML('beforeend', `
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img class="card-image" src=${image_url} alt="Album Art" data-user-id=${userId} style="width:300px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <h1 class="record-title">${title}</h1>
+            <h2 class="record-artist">${artist}</h2>
+            <h3 class="record-genre">${genre}</h3>
+            <button 
+              id="modal-success-button" 
+              class="record-button" 
+              data-user-id=${userId} 
+              data-record-id=${id} 
+              data-toggle="modal" 
+              data-target="#succesModal">
+              Add to Collection
+            </button>
+          </div>
+        </div>
+      </div>
+    `)
   };
 
   function renderAllRecords(){
