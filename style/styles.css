@@ -2,11 +2,6 @@
   --base: #ffc600;
 }
 
-
-.navigation {
-  float: left;
-}
-
 .form-control.mr-sm-2 {
   width: 100%;
 }
@@ -15,12 +10,6 @@
   font-family: 'Righteous';
   font-size: 4em;
   margin-left: 54%;
-}
-
-.nav-bar {
-  width: 100%;
-  position: fixed;
-  z-index: 100;
 }
 
 .background-img {
@@ -51,19 +40,6 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-}
-
-
-.login-title {
-  font-family: 'Righteous';
-  font-size: 8.75em;
-  margin-left: .25;
-}
-
-.login-div {
-  font-family: 'Righteous';
-  font-size: 2em;
-  margin-left: 30px;
 }
 
 .piano {
@@ -102,16 +78,16 @@ svg {
   margin: 40px auto 0;
 }
 
-.record-button-css {
+.record-button {
   border-color: #554544;
   width: 100%;
-  margin-top: auto;
+  margin-top: 0;
   border-radius: 8px;
   background-color: #554544;
   color: white;
 }
 
-.record-button-css:hover {
+.record-button:hover {
   border-color: #453534;
   background-color: #453534;
 }
