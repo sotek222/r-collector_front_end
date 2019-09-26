@@ -1,5 +1,3 @@
-//----------------- FETCHES ------------------------------//
-
 function postUser(email) {
     return fetch(userUrl, {
         method: "POST",
@@ -53,4 +51,13 @@ function postRecord(title, artist, genre, image) {
             image_url: image
         })
     }).then(resp => resp.json())
+};
+
+
+const adapter = {
+    postUser,
+    removeFromCollection,
+    postToCollection,
+    fetchRecords,
+    postRecord
 };
