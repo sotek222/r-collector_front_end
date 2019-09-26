@@ -1,3 +1,8 @@
+:root {
+  --base: #ffc600;
+}
+
+
 .navigation {
   float: left;
 }
@@ -15,6 +20,7 @@
 .nav-bar {
   width: 100%;
   position: fixed;
+  z-index: 100;
 }
 
 .background-img {
@@ -42,51 +48,6 @@
   justify-content: flex-start;
 }
 
-.record-card {
-  width: 300px;
-  margin: 20px;
-  background-color: #f2cc0e;
-  box-shadow: 10px 10px 20px 0px #5c5c5c;
-  display: flex;
-  flex-flow: column nowrap;
-  border-radius: 8px;
-}
-
-.record-image-css {
-  width: 100%;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-.record-title-css {
-  background-color: #f2cc0e;
-  color: black;
-}
-
-.record-artist-css {
-  background-color: #f2cc0e;
-  color: black;
-}
-
-.record-genre-css {
-  background-color: #f2cc0e;
-  color: black;
-}
-
-.record-button-css {
-  border-color: #554544;
-  width: 100%;
-  margin-top: auto;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background-color: #554544;
-  color: white;
-}
-
-.record-button-css:hover {
-  border-color: #453534;
-  background-color: #453534;
-}
 
 .login-title {
   font-family: 'Righteous';
@@ -133,4 +94,70 @@ svg {
   width: 100px;
   display: block;
   margin: 40px auto 0;
+}
+
+.record-button-css {
+  border-color: #554544;
+  width: 100%;
+  margin-top: auto;
+  border-radius: 8px;
+  background-color: #554544;
+  color: white;
+}
+
+.record-button-css:hover {
+  border-color: #453534;
+  background-color: #453534;
+}
+
+
+
+/* Cards */
+
+.card-image {
+  border-radius: 8px;
+}
+
+.flip-card {
+  background-color: transparent;
+  margin: 8%;
+  perspective: 1000px;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  width: 23vw;
+  height: 29vh;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  backface-visibility: hidden;
+  border-radius: 8px;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  width: 23vw;
+  height: 43.5vh;
+  background-color: var(--base);
+  color: black;
+  transform: rotateY(180deg);
 }
