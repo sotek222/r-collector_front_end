@@ -1,5 +1,12 @@
 :root {
-  --base: #ffc600;
+  --body-bg: gainsboro;
+  --card: #ffc600;
+  --brown-button: #554544;
+  --hover-brown-button: #453534
+}
+
+body {
+  background-color: var(--body-bg);
 }
 
 .form-control.mr-sm-2 {
@@ -42,24 +49,6 @@
   justify-content: flex-start;
 }
 
-.piano {
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 25px;
-}
-
-.drums {
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 25px;
-}
-
-.games {
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 25px;
-}
-
 .success-dialog {
   margin-left: 41%;
   margin-top: 15%;
@@ -79,17 +68,17 @@ svg {
 }
 
 .record-button {
-  border-color: #554544;
+  border-color: var(--brown-button);
   width: 100%;
   margin-top: 0;
   border-radius: 8px;
-  background-color: #554544;
+  background-color: var(--brown-button);
   color: white;
 }
 
 .record-button:hover {
-  border-color: #453534;
-  background-color: #453534;
+  border-color: var(--hover-brown-button);
+  background-color: var(--hover-brown-button);
 }
 
 
@@ -140,7 +129,7 @@ svg {
 .flip-card-back {
   width: 23vw;
   height: 43.5vh;
-  background-color: var(--base);
+  background-color: var(--card);
   color: black;
   transform: rotateY(180deg);
 }
