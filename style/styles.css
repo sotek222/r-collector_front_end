@@ -1,5 +1,5 @@
 :root {
-  --body-bg: gainsboro;
+  --body-bg: #8478a3;
   --card: #ffc600;
   --brown-button: #554544;
   --hover-brown-button: #453534
@@ -67,23 +67,20 @@ svg {
   margin: 40px auto 0;
 }
 
-.record-button {
-  border-color: var(--brown-button);
-  width: 100%;
-  margin-top: 0;
-  border-radius: 8px;
-  background-color: var(--brown-button);
-  color: white;
-}
-
-.record-button:hover {
-  border-color: var(--hover-brown-button);
-  background-color: var(--hover-brown-button);
-}
-
-
-
 /* Cards */
+  .record-button {
+    border-color: var(--brown-button);
+    width: 100%;
+    margin-top: 0;
+    border-radius: 8px;
+    background-color: var(--brown-button);
+    color: white;
+  }
+  
+  .record-button:hover {
+    border-color: var(--hover-brown-button);
+    background-color: var(--hover-brown-button);
+  }
 
 .card-image {
   border-radius: 8px;
