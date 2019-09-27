@@ -1,19 +1,12 @@
-const recordsUrl = "http://localhost:3000/records";
-const userUrl = "http://localhost:3000/users";
-const collectionUrl = "http://localhost:3000/collections";
 const recordsContainer = document.querySelector('.records-container');
 const navBar = document.querySelector('.nav-bar');
 const formDiv = document.querySelector('.new-record-form');
 const searchBar = document.getElementById('search-bar');
 const modalBtn = document.getElementById('modal-button');
 const body = document.querySelector('body');
-const piano = document.querySelectorAll('.piano');
-const drums = document.querySelectorAll('.drums');
-
 
 let userId;
 let filtered;
-
 // ---------------- RENDERS -------------------------//
 
 function renderAllRecords(){
@@ -74,14 +67,14 @@ function renderLogin(){
   <h1 class="login-title">R-Collector</h1>
   <h3 class="login-div">Log-in</h3>
   <input class="login-div" id="log-in" placeholder="Enter Email"></input>
-  <button class="login-div">Log-in</button><br>
+  <button class="login-div" data-action="login">Log-in</button><br>
   <div></div>
   `;
   body.appendChild(landing);
 
 
   landing.addEventListener('click', e => {
-    if (e.target.innerText === "Log-in") {
+    if (e.target.dataset.action === "login") {
       let logInInput = document.querySelector('#log-in').value;
 
       postUser(logInInput)
