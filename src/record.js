@@ -6,13 +6,13 @@ class Record {
     this.id = genre;
     this.id = image_url;
 
-    Game.all.push(this);
+    Record.all.push(this);
   }
   
   render(){
-    console.log("Game:", this);
+    console.log("Record:", this);
   }
   
 }
 
-Game.all = [];
+Record.all = [];
