@@ -76,34 +76,9 @@ function renderLogin(){
   <input class="login-div" id="log-in" placeholder="Enter Email"></input>
   <button class="login-div">Log-in</button><br>
   <div></div>
-  <!-- <iframe></iframe> -->
   `;
   body.appendChild(landing);
 
-  //music box
-
-  let password = [];
-  let iFrame = document.querySelectorAll('iframe');
-
-  document.addEventListener('keydown', (e => {
-    password.push(e.key)
-    console.log(password)
-    if(e.key === "Enter") {
-      password = []
-    } else if (password.join('') === "piano") {
-      landing.lastElementChild.remove()
-      landing.innerHTML += `<iframe class="piano" src="http://www.freeonlinegames.com/embed/2681" width="500" height="300" frameborder="no" scrolling="no"></iframe>`
-      password = []
-    } else if(password.join('') === "drums") {
-      landing.lastElementChild.remove()
-      landing.innerHTML += `<iframe class="drums" src="http://www.freeonlinegames.com/embed/127254" width="500" height="500" frameborder="no" scrolling="no"></iframe>`
-      password = []
-    } else if(password.join('') === "games") {
-      landing.lastElementChild.remove()
-      landing.innerHTML += `<iframe class="games" src="http://www.freeonlinegames.com/embed/124792" width="800" height="440" frameborder="no" scrolling="no"></iframe>`
-    }
-
-  }))
 
   landing.addEventListener('click', e => {
     if (e.target.innerText === "Log-in") {
