@@ -3,14 +3,41 @@ class Record {
     this.id = id;
     this.title = title;
     this.artist = artist;
-    this.id = genre;
-    this.id = image_url;
-
+    this.genre = genre;
+    this.image_url = image_url;
+  
     Record.all.push(this);
   }
   
-  render(){
-    console.log("Record:", this);
+  renderCard(container){ 
+    const {id, title, artist, genre, image_url} = this;
+    const html = `
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img class="card-image" src=${image_url} alt="Album Art" data-user-id=${userId} style="width:300px;height:300px;">
+        </div>
+        <div class="flip-card-back">
+          <h1 class="record-title">${title}</h1>
+          <h2 class="record-artist">${artist}</h2>
+          <h3 class="record-genre">${genre}</h3>
+          <button 
+            id="modal-success-button" 
+            class="record-button" 
+            data-user-id=${userId} 
+            data-record-id=${id} 
+            data-toggle="modal" 
+            data-target="#succesModal">
+            Add to Collection
+          </button>
+        </div>
+      </div>
+     `;
+
+    this.card = document.createElement('div');
+    this.card.className = "flip-card"
+
+    this.card.insertAdjacentHTML('beforeend', html);
+    container.insertAdjacentElement('beforeend', this.card);
   }
   
 }

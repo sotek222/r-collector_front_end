@@ -1,10 +1,9 @@
 const recordsUrl = "http://localhost:3000/records";
 const userUrl = "http://localhost:3000/users";
 const collectionUrl = "http://localhost:3000/collections";
-
+const recordsContainer = document.querySelector('.records-container');
 const navBar = document.querySelector('.nav-bar');
 const formDiv = document.querySelector('.new-record-form');
-const recordsContainer = document.querySelector('.records-container');
 const searchBar = document.getElementById('search-bar');
 const modalBtn = document.getElementById('modal-button');
 const body = document.querySelector('body');
@@ -17,34 +16,6 @@ let filtered;
 
 // ---------------- RENDERS -------------------------//
 
-function renderRecord(game) {
-  const html = `
-    <div class="flip-card">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <img class="card-image" src=${game.image_url} alt="Album Art" data-user-id=${userId} style="width:300px;height:300px;">
-        </div>
-        <div class="flip-card-back">
-          <h1 class="record-title">${game.title}</h1>
-          <h2 class="record-artist">${game.artist}</h2>
-          <h3 class="record-genre">${game.genre}</h3>
-          <button 
-            id="modal-success-button" 
-            class="record-button" 
-            data-user-id=${userId} 
-            data-record-id=${game.id} 
-            data-toggle="modal" 
-            data-target="#succesModal">
-            Add to Collection
-          </button>
-        </div>
-      </div>
-    </div>
-  `;
-
-  recordsContainer.insertAdjacentHTML('beforeend', html)
-};
-
 function renderAllRecords(){
   navBar.style.display = "block";
   recordsContainer.style.display = "flex";
@@ -53,7 +24,8 @@ function renderAllRecords(){
   fetchRecords(recordsUrl)
   .then(records => {
     records.forEach(record => {
-      renderRecord(record)
+      const newRecord = new Record(record);
+      newRecord.renderCard(recordsContainer);
     })
   })
 };
@@ -106,7 +78,6 @@ function renderLogin(){
   <div></div>
   <!-- <iframe></iframe> -->
   `;
-  // iFrame.style.display = 'none';
   body.appendChild(landing);
 
   //music box
