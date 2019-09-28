@@ -1,10 +1,12 @@
+const API = new APICommunicator();
+// --------------- Selectors -----------------------------------//
 const recordsContainer = document.querySelector('.records-container');
 const navBar = document.querySelector('.nav-bar');
 const formDiv = document.querySelector('.new-record-form');
 const searchBar = document.getElementById('search-bar');
 const modalBtn = document.getElementById('modal-button');
 const body = document.querySelector('body');
-
+const userRecords = [];
 let userId;
 let filtered;
 // ---------------- RENDERS -------------------------//
@@ -14,7 +16,7 @@ function renderAllRecords(){
   recordsContainer.style.display = "flex";
   recordsContainer.innerHTML = '';
 
-  fetchRecords(recordsUrl)
+  API.fetchRecords()
   .then(records => {
     records.forEach(record => {
       const newRecord = new Record(record);
@@ -24,25 +26,22 @@ function renderAllRecords(){
 };
 
 function renderCollection(){
-  fetchRecords(collectionUrl)
-  .then(collections => {
-    collections.forEach(collection => {
-      if (collection.user_id === userId) {
+    userRecords.forEach(({id, image_url, title, artist, genre}) => {
         const html = `
           <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img class="card-image" src=${collection.record.image_url} alt="Album Art" data-user-id=${userId} style="width:300px;height:300px;">
+                <img class="card-image" src=${image_url} alt="Album Art" data-user-id=${userId} style="width:300px;height:300px;">
               </div>
               <div class="flip-card-back">
-                <h1 class="record-title">${collection.record.title}</h1>
-                <h2 class="record-artist">${collection.record.artist}</h2>
-                <h3 class="record-genre">${collection.record.genre}</h3>
+                <h1 class="record-title">${title}</h1>
+                <h2 class="record-artist">${artist}</h2>
+                <h3 class="record-genre">${genre}</h3>
                 <button 
                   id="modal-success-button" 
                   class="record-button" 
                   data-user-id=${userId} 
-                  data-record-id=${collection.record.id} 
+                  data-record-id=${id} 
                   data-toggle="modal" 
                   data-target="#succesModal">
                   Add to Collection
@@ -50,11 +49,8 @@ function renderCollection(){
                 </div>
             </div>
           </div>`;
-
         recordsContainer.insertAdjacentHTML("beforeend", html);
-      }
-    })
-  })
+      });
 };
 
 function renderLogin(){
@@ -77,9 +73,10 @@ function renderLogin(){
     if (e.target.dataset.action === "login") {
       let logInInput = document.querySelector('#log-in').value;
 
-      postUser(logInInput)
+      API.postUser(logInInput)
       .then(user => {
         userId = user.id;
+        user.records.forEach(r => userRecords.push(r));
         landing.remove();
         renderAllRecords();
       })
@@ -101,7 +98,7 @@ renderLogin();
 recordsContainer.addEventListener('click', (e) => {
   if(e.target.innerText === "Add to Collection") {
     let recordId = parseInt(e.target.dataset.recordId);
-    let sucessModal = document.getElementById('succesModal')
+    const sucessModal = document.getElementById('succesModal')
     postToCollection(userId, recordId)
 
     setTimeout(function(){
@@ -136,7 +133,7 @@ formDiv.addEventListener('click', (e) => {
   const image = document.querySelector(".record-img").value;
 
   if (e.target.innerText === "Create Record") {
-    postRecord(title, artist, genre, image).then(record => renderRecord(record))
+    API.postRecord(title, artist, genre, image).then(record => renderRecord(record))
     document.querySelector(".record-title").value = "";
     document.querySelector(".record-artist").value = "";
     document.querySelector(".record-genre").value = "";
@@ -146,7 +143,7 @@ formDiv.addEventListener('click', (e) => {
 
 searchBar.addEventListener('input', (e) => {
   let searchInput = searchBar.value.toLowerCase()
-    fetchRecords(recordsUrl)
+    fetchRecords()
     .then(records => {
       filtered = records.filter(record => {
         return (record.title.toLowerCase().includes(searchInput) || record.artist.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)) || record.genre.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)))

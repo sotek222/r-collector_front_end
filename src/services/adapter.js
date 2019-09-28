@@ -1,63 +1,58 @@
-function postUser(email) {
-    return fetch(userUrl, {
-        method: "POST",
-        headers: {
+class APICommunicator {
+    constructor(endpoint = "http://localhost:3000/"){
+        this.endpoint = endpoint;
+        this.headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            email: email
-        })
-    })
-        .then(resp => resp.json())
-};
+        };
+    }
 
-function removeFromCollection(collectionId) {
-    return fetch(`${collectionUrl}/${collectionId}`, {
-        method: "DELETE"
-    })
-};
-
-function postToCollection(userId, recordId) {
-    return fetch(collectionUrl, {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            user_id: userId,
-            record_id: recordId
-        })
-    })
-};
-
-function fetchRecords(url) {
-    return fetch(url)
+    fetchRecords(){
+        return fetch(this.endpoint + "records")
         .then(res => res.json())
-};
+    };
 
-function postRecord(title, artist, genre, image) {
-    return fetch(recordsUrl, {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            title: title,
-            artist: artist,
-            genre: genre,
-            image_url: image
+    postRecord(title, artist, genre, image) {
+        return fetch(this.endpoint + "users", {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify({
+                title: title,
+                artist: artist,
+                genre: genre,
+                image_url: image
+            })
+        }).then(resp => resp.json())
+    };
+
+    postUser(email) {
+        return fetch(this.endpoint + "users", {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify({
+                email: email
+            })
         })
-    }).then(resp => resp.json())
+        .then(resp => resp.json());
+    };
+
+    removeFromCollection(collectionId) {
+      return fetch(this.endpoint + `collections/${collectionId}`, { method: "DELETE" })
+    };
+
+    postToCollection(userId, recordId) {
+        return fetch(this.endpoint + "collections", {
+            method: "POST",
+            headers: this.headers,
+            body: JSON.stringify({
+                user_id: userId,
+                record_id: recordId
+            })
+        })
+    };
+
 };
 
 
-const adapter = {
-    postUser,
-    removeFromCollection,
-    postToCollection,
-    fetchRecords,
-    postRecord
-};
+
+
