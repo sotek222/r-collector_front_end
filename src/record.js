@@ -14,7 +14,7 @@ class Record {
     const html = `
       <div class="flip-card-inner">
         <div class="flip-card-front">
-          <img class="card-image" src=${image_url} alt="Album Art" data-user-id=${userId} style="width:300px;height:300px;">
+          <img class="card-image" src=${image_url} alt="Album Art" data-user-id=${localStorage.userId}>
         </div>
         <div class="flip-card-back">
           <h1 class="record-title">${title}</h1>
@@ -23,7 +23,7 @@ class Record {
           <button 
             id="modal-success-button" 
             class="record-button" 
-            data-user-id=${userId} 
+            data-user-id=${localStorage.userId} 
             data-record-id=${id} 
             data-toggle="modal" 
             data-target="#succesModal">
@@ -35,7 +35,13 @@ class Record {
 
     this.card = document.createElement('div');
     this.card.className = "flip-card"
-
+    this.card.addEventListener('click', () => {
+      if (this.card.classList.value.includes('flipped')){
+        this.card.classList.remove('flipped')
+      } else {
+        this.card.classList.add('flipped')
+      }
+    })
     this.card.insertAdjacentHTML('beforeend', html);
     container.insertAdjacentElement('beforeend', this.card);
   }
