@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style/navigation.css">
     <script defer type="text/javascript" src="./src/services/adapter.js"></script>
     <script defer type="text/javascript" src="./src/record.js"></script>
-    <script defer type="text/javascript" src="src/index.js"></script>
+    <script defer type="text/javascript" src="./src/index.js"></script>
   </head>
   <body>
     <img class="background-img" src="assests/record-bg.png" alt="">
@@ -23,6 +23,8 @@
               <span class="my-collection btn btn-primary">My Collection</span>
               <span class="all-records btn btn-primary">All Records</span>
               <button id="modal-button" type="button" name="create" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add to our Library</button>
+              <span class="all-records btn btn-secondary" data-action="flip">Flip Records</span>
+              <span class="all-records btn btn-primary logout" data-action="logout">Log Out</span>
               <div class="search-field">
                 <input class="search form-control mr-sm-2" id="search-bar" type="search" name="" value="" placeholder="Search">
               </div>
@@ -33,7 +35,7 @@
       </div>
         <nav class="navbar navbar-dark bg-dark">
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-            <!-- <span class="navbar-toggler-icon"></span> -->
+            <span class="navbar-toggler-icon"></span>
             <img src="assests/record.png" alt="">
           </button>
         </nav>
