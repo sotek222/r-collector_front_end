@@ -1,12 +1,14 @@
 :root {
-  --body-bg: #8478a3;
+  --body-bg: #412c1d;
+  --big-text: #ffffff;
   --card: #ffc600;
   --brown-button: #554544;
-  --hover-brown-button: #453534
+  --hover-brown-button: #453534;
 }
 
 body {
   background-color: var(--body-bg);
+  background-image: url("../assests/wood-panels.jpg");
 }
 
 .form-control.mr-sm-2 {
@@ -59,6 +61,16 @@ body {
   padding-bottom: 6%;
 }
 
+.logout {
+  background-color: #8b0000;
+  border-color: #8b0000;
+}
+
+.logout:hover {
+  background-color: #5f0000;
+  border-color: #5f0000;
+}
+
 /* CHECK START */
 
 svg {
@@ -71,7 +83,7 @@ svg {
   .record-button {
     border-color: var(--brown-button);
     width: 100%;
-    margin-top: 0;
+    margin-top: 100%;
     border-radius: 8px;
     background-color: var(--brown-button);
     color: white;
@@ -83,6 +95,8 @@ svg {
   }
 
 .card-image {
+  width: 300px;
+  height: 300px;
   border-radius: 8px;
 }
 
@@ -105,7 +119,7 @@ svg {
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card:hover .flip-card-inner {
+.flipped .flip-card-inner {
   transform: rotateY(180deg);
 }
 

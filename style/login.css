@@ -1,11 +1,16 @@
 .login-title {
-  font-family: 'Righteous';
-  font-size: 8.75em;
-  margin-left: .25;
-}
-
+   color: var(--big-text);
+   font-family: 'Righteous';
+   font-size: 8.75em;
+  }
+  
 .login-div {
   font-family: 'Righteous';
   font-size: 2em;
+  margin-left: 30px;
+}
+
+.login-text {
+  color: var(--big-text);
   margin-left: 30px;
 }
