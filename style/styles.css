@@ -80,19 +80,20 @@ svg {
 }
 
 /* Cards */
-  .record-button {
-    border-color: var(--brown-button);
-    width: 100%;
-    margin-top: 100%;
-    border-radius: 8px;
-    background-color: var(--brown-button);
-    color: white;
-  }
-  
-  .record-button:hover {
-    border-color: var(--hover-brown-button);
-    background-color: var(--hover-brown-button);
-  }
+.record-button {
+  position: relative;
+  top: 100%;
+  border-color: var(--brown-button);
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--brown-button);
+  color: white;
+}
+
+.record-button:hover {
+  border-color: var(--hover-brown-button);
+  background-color: var(--hover-brown-button);
+}
 
 .card-image {
   width: 300px;
@@ -114,8 +115,8 @@ svg {
   text-align: center;
   transition: transform 0.8s;
   transform-style: preserve-3d;
-  width: 23vw;
-  height: 29vh;
+  width: 300px;
+  height: 300px;
 }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
@@ -138,8 +139,8 @@ svg {
 
 /* Style the back side */
 .flip-card-back {
-  width: 23vw;
-  height: 43.5vh;
+  width: 300px;
+  height: 300px;
   background-color: var(--card);
   color: black;
   transform: rotateY(180deg);
