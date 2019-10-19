@@ -81,7 +81,6 @@ svg {
 
 /* Cards */
 .record-button {
-  position: relative;
   top: 100%;
   border-color: var(--brown-button);
   width: 100%;

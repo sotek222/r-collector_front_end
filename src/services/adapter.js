@@ -51,6 +51,11 @@ class APICommunicator {
         })
     };
 
+    getUser(userId){
+        return fetch(this.endpoint + `/users/${userId}`)
+        .then(resp => resp.json());
+    };
+
 };
 
 

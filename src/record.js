@@ -5,9 +5,11 @@ class Record {
     this.artist = artist;
     this.genre = genre;
     this.image_url = image_url;
-  
-    Record.all.push(this);
-  }
+
+    if(!Record.all.find(record => record.id === id)){
+      Record.all.push(this);
+    };
+  };
   
   renderCard(container){ 
     const {id, title, artist, genre, image_url} = this;

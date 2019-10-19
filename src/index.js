@@ -10,25 +10,48 @@ const userRecords = [];
 let filtered;
 // ---------------- RENDERS -------------------------//
 
+
+function renderRecord(record){
+  const newRecord = new Record(record);
+  newRecord.renderCard(recordsContainer);
+};
+
 function renderAllRecords(){
   navBar.style.display = "block";
   recordsContainer.style.display = "flex";
   recordsContainer.innerHTML = '';
-
+  
   API.fetchRecords()
   .then(records => {
     records.forEach(record => {
-      const newRecord = new Record(record);
-      newRecord.renderCard(recordsContainer);
-    })
-  })
+      renderRecord(record)
+    });
+  });
 };
 
 function renderCollection(){
-  // need to either fetch the user and the records, or 
-  // using a serializer have the users already available. 
-  // then filter through them to get the user's records. 
+  if(userRecords.length > 0){
+    userRecords.forEach(userRecord => {
+      renderRecord(userRecord);
+    })
+  } else {
+    API
+    .getUser(localStorage.getItem('userId'))
+    .then(user => {
+      user.records.forEach(userRecord => {
+        renderRecord(userRecord);
+      });
+    });
+  };
 };
+
+function renderFilteredRecords(filtered){
+  recordsContainer.innerHTML = '';
+  filtered.forEach(record => {
+    record.renderCard(recordsContainer);
+  });
+};
+
 
 function renderLogin(){
   navBar.style.display = 'none';
@@ -56,17 +79,11 @@ function renderLogin(){
         user.records.forEach(r => userRecords.push(r));
         landing.remove();
         renderAllRecords();
-      })
-    }
-  })
-};
-
-function renderFilteredRecords(filtered){
-  recordsContainer.innerHTML = '';
-  filtered.forEach(record => {
-    record.renderCard(recordsContainer);
+      });
+    };
   });
 };
+
 
 //-----------EVENT LISTENERS------------------------//
 if(localStorage.userId){
@@ -81,16 +98,16 @@ recordsContainer.addEventListener('click', (e) => {
     const sucessModal = document.getElementById('succesModal');
     postToCollection(localStorage.userId, recordId);
 
-    setTimeout(function(){
+    setTimeout(function() {
       succesModal.click()
     }, 1500)
   }
 
   if(e.target.innerText === "Remove from Collection"){
-    let collectionId = e.target.dataset.collectionId
+    const collectionId = e.target.dataset.collectionId
     removeFromCollection(collectionId)
     .then(() => {
-      let recordDiv = e.target.parentNode;
+      const recordDiv = e.target.parentNode;
       recordDiv.remove();
     })
   }
@@ -117,7 +134,7 @@ navBar.addEventListener('click', (e) => {
   }
 });
 
-
+// change to a submit event
 formDiv.addEventListener('click', (e) => {
   e.preventDefault();
   const title = document.querySelector(".record-title").value;
@@ -126,7 +143,8 @@ formDiv.addEventListener('click', (e) => {
   const image = document.querySelector(".record-img").value;
 
   if (e.target.innerText === "Create Record") {
-    API.postRecord(title, artist, genre, image).then(record => renderRecord(record))
+    API.postRecord(title, artist, genre, image)
+    .then(record => renderRecord(record))
     document.querySelector(".record-title").value = "";
     document.querySelector(".record-artist").value = "";
     document.querySelector(".record-genre").value = "";
@@ -135,15 +153,12 @@ formDiv.addEventListener('click', (e) => {
 });
 
 searchBar.addEventListener('input', (e) => {
-  let searchInput = searchBar.value.toLowerCase();
-    // API.fetchRecords()
-    // .then(records => {
-      filtered = Record.all.filter(({ title, artist, genre}) => {
-        return (title.toLowerCase().includes(searchInput) 
-        || artist.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)) 
-        || genre.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)))
-      })
+  const searchInput = searchBar.value.toLowerCase();
+  filtered = Record.all.filter(({ title, artist, genre}) => {
+    return (title.toLowerCase().includes(searchInput) 
+    || artist.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)) 
+    || genre.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)))
+  });
 
-      renderFilteredRecords(filtered)
-    // })
+  renderFilteredRecords(filtered);
 });
