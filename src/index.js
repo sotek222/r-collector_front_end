@@ -53,7 +53,7 @@ function renderFilteredRecords(filtered){
 };
 
 
-function renderLogin(){
+function renderLogin() {
   navBar.style.display = 'none';
   recordsContainer.style.display = 'none';
 
@@ -94,9 +94,9 @@ if(localStorage.userId){
 
 recordsContainer.addEventListener('click', (e) => {
   if(e.target.innerText === "Add to Collection") {
-    let recordId = parseInt(e.target.dataset.recordId);
+    const recordId = parseInt(e.target.dataset.recordId);
     const sucessModal = document.getElementById('succesModal');
-    postToCollection(localStorage.userId, recordId);
+    API.postToCollection(localStorage.userId, recordId);
 
     setTimeout(function() {
       succesModal.click()
@@ -145,10 +145,12 @@ formDiv.addEventListener('click', (e) => {
   if (e.target.innerText === "Create Record") {
     API.postRecord(title, artist, genre, image)
     .then(record => renderRecord(record))
-    document.querySelector(".record-title").value = "";
-    document.querySelector(".record-artist").value = "";
-    document.querySelector(".record-genre").value = "";
-    document.querySelector(".record-img").value = "";
+      document.querySelectorAll('[type="text"]')
+      .forEach(input => input.value = "");
+  }
+  if(e.target.innerText === "Close") {
+    document.querySelectorAll('[type="text"]')
+      .forEach(input => input.value = "");
   }
 });
 
