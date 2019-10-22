@@ -1,8 +1,5 @@
 /* Cards */
 .record-button {
-  position: absolute;
-  bottom: 0;
-  left: 0;
   height: 3.5em;
   width: 100%;
   border-radius: 0 0 8px 8px;
@@ -48,6 +45,9 @@
 /* Position the front and back side */
 .flip-card-front,
 .flip-card-back {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: absolute;
   backface-visibility: hidden;
   border-radius: 8px;
