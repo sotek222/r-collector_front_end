@@ -1,0 +1,68 @@
+/* Cards */
+.record-button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3.5em;
+  width: 100%;
+  border-radius: 0 0 8px 8px;
+  color: white;
+  background-color: var(--brown-button);
+  border-color: var(--brown-button);
+}
+
+.record-button:hover {
+  border-color: var(--hover-brown-button);
+  background-color: var(--hover-brown-button);
+}
+
+.card-image {
+  width: 300px;
+  height: 300px;
+  border-radius: 8px;
+}
+
+.flip-card {
+  background-color: transparent;
+  margin: 8%;
+  perspective: 1000px;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  width: 300px;
+  height: 300px;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  backface-visibility: hidden;
+  border-radius: 8px;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  width: 300px;
+  height: 300px;
+  background-color: var(--card);
+  color: black;
+  transform: rotateY(180deg);
+}
