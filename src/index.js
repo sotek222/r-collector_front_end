@@ -1,3 +1,7 @@
+
+import APICommunicator from './services/adapter';
+import Record from './record';
+
 const API = new APICommunicator();
 // --------------- Selectors -----------------------------------//
 const recordsContainer = document.querySelector('.records-container');

@@ -1,0 +1,28 @@
+{
+  "name": "r-collector_front_end",
+  "version": "1.0.0",
+  "description": "A webapp that lets users display their collections of music",
+  "main": "index.js",
+  "scripts": {
+    "test": "cowsay \"Error: no test specified\"",
+    "build": "webpack --mode=development --devtool=none --open",
+    "start": "webpack-dev-server mode=development --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sotek222/r-collector_front_end.git"
+  },
+  "author": "Matthew Masiello",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sotek222/r-collector_front_end/issues"
+  },
+  "homepage": "https://github.com/sotek222/r-collector_front_end#readme",
+  "devDependencies": {
+    "cowsay": "^1.4.0",
+    "css-loader": "^3.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.9.0"
+  }
+}

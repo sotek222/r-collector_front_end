@@ -19,9 +19,11 @@ class Record {
           <img class="card-image" src=${image_url} alt="Album Art" data-user-id=${localStorage.userId}>
         </div>
         <div class="flip-card-back">
-          <h1 class="record-title">${title}</h1>
-          <h2 class="record-artist">${artist}</h2>
-          <h3 class="record-genre">${genre}</h3>
+          <div>
+            <h1 class="record-title">${title}</h1>
+            <h2 class="record-artist">${artist}</h2>
+            <h3 class="record-genre">${genre}</h3>
+          </div>
           <button 
             id="modal-success-button" 
             class="record-button" 
@@ -51,3 +53,5 @@ class Record {
 }
 
 Record.all = [];
+
+export default Record

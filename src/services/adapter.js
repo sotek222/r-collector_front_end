@@ -59,5 +59,5 @@ class APICommunicator {
 };
 
 
-
+export default APICommunicator
 
