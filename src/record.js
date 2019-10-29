@@ -1,3 +1,5 @@
+import "../style/card.css";
+
 class Record {
   constructor({id, title, artist, genre, image_url}){
     this.id = id;
@@ -53,3 +55,5 @@ class Record {
 }
 
 Record.all = [];
+
+export default Record

@@ -1,3 +1,9 @@
+import APICommunicator from './services/adapter';
+import Record from './record';
+
+import '../style/login.css';
+import '../style/styles.css';
+
 const API = new APICommunicator();
 // --------------- Selectors -----------------------------------//
 const recordsContainer = document.querySelector('.records-container');

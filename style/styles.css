@@ -1,5 +1,5 @@
 :root {
-  --body-bg: #412c1d;
+  --body-bg: #412c1f;
   --big-text: #ffffff;
   --card: #ffc600;
   --brown-button: #554544;
@@ -8,7 +8,8 @@
 
 body {
   background-color: var(--body-bg);
-  background-image: url("../assests/wood-panels.jpg");
+  /* background-image: url("/Users/home/Development/Projects/R-Collector/r-collector_front_end/assests/wood-panels.jpg"); */
+  /* background-image: url("../assests/wood-panels.jpg"); */
 }
 
 .form-control.mr-sm-2 {
@@ -44,7 +45,6 @@ body {
 
 
 .records-container {
-  border-top: solid 50px;
   width: 75vw;
   display: flex;
   flex-flow: row wrap;
