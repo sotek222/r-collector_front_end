@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cowsay \"Error: no test specified\"",
     "build": "webpack --config=webpack.dev.js",
-    "start": "webpack-dev-server mode=development --open"
+    "start": "webpack-dev-server --config=webpack.dev.js --open"
   },
   "repository": {
     "type": "git",
