@@ -11,8 +11,8 @@ function colorRandomizer() {
   return `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
 };
 
-function renderRecord(record, container) {
-  const newRecord = new Record(record);
+function renderRecord(record, container, inCollection = false) {
+  const newRecord = new Record(record, inCollection);
   newRecord.renderCard(container);
 };
 

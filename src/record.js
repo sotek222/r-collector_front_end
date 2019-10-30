@@ -2,12 +2,13 @@ import "../styles/card.css";
 import { colorRandomizer } from './services/utils';
 
 class Record {
-  constructor({id, title, artist, genre, image_url}){
+  constructor({id, title, artist, genre, image_url}, inCollection = false){
     this.id = id;
     this.title = title;
     this.artist = artist;
     this.genre = genre;
     this.image_url = image_url;
+    this.inCollection = inCollection;
 
     if(!Record.all.find(record => record.id === id)){
       Record.all.push(this);
@@ -15,9 +16,9 @@ class Record {
   };
   
   renderCard(container){ 
-    const { id, title, artist, genre, image_url } = this;
+    const { id, title, artist, genre, image_url, inCollection } = this;
     const html = `
-      <div class="flip-card-inner">
+      <div class="flip-card-inner" data-record-card-id=${id}>
         <div class="flip-card-front">
           <img class="card-image" src=${image_url} alt="Album Art" data-user-id=${localStorage.userId}>
         </div>
@@ -30,16 +31,16 @@ class Record {
           <button 
             id="modal-success-button" 
             class="record-button" 
-            data-user-id=${localStorage.userId} 
             data-record-id=${id} 
             data-toggle="modal" 
-            data-target="#succesModal">
-            Add to Collection
+            data-target="#succesModal"
+            data-action=${inCollection ? "remove-record" : "add-record"}>
+            ${inCollection ? "Remove from Collection" : "Add to Collection"}
           </button>
         </div>
       </div>
      `;
-
+     
     this.card = document.createElement('div');
     this.card.className = "flip-card";
     this.card.addEventListener('click', () => {

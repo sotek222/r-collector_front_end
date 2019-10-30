@@ -35,14 +35,14 @@ function renderAllRecords(){
 function renderCollection(){
   if(userRecords.length > 0){
     userRecords.forEach(userRecord => {
-      renderRecord(userRecord, recordsContainer);
+      renderRecord(userRecord, recordsContainer, true);
     })
   } else {
     API
     .getUser(localStorage.getItem('userId'))
     .then(user => {
       user.records.forEach(userRecord => {
-        renderRecord(userRecord, recordsContainer);
+        renderRecord(userRecord, recordsContainer, true);
       });
     });
   };
@@ -96,24 +96,20 @@ if(localStorage.userId){
 };
 
 recordsContainer.addEventListener('click', (e) => {
-  if(e.target.innerText === "Add to Collection") {
-    const recordId = parseInt(e.target.dataset.recordId);
-    const sucessModal = document.getElementById('succesModal');
+  if (e.target.dataset.action === "add-record") {
+    const recordId = e.target.dataset.recordId;
     API.postToCollection(localStorage.userId, recordId);
+  };
 
-    setTimeout(function() {
-      succesModal.click()
-    }, 1500)
-  }
-
-  if(e.target.innerText === "Remove from Collection"){
-    const collectionId = e.target.dataset.collectionId
-    removeFromCollection(collectionId)
-    .then(() => {
-      const recordDiv = e.target.parentNode;
+  if(e.target.dataset.action === "remove-record"){ 
+    const recordId = e.target.dataset.recordId;
+    API.removeFromCollection(localStorage.userId, recordId)
+    .then(recordId => {
+      const recordDiv = document.querySelector(`[data-record-card-id='${recordId}']`)
+      debugger;
       recordDiv.remove();
-    })
-  }
+    });
+  };
 });
 
 navBar.addEventListener('click', (e) => {

@@ -13,7 +13,7 @@ class APICommunicator {
     };
 
     postRecord(title, artist, genre, image) {
-        return fetch(this.endpoint + "users", {
+        return fetch(this.endpoint + "records", {
             method: "POST",
             headers: this.headers,
             body: JSON.stringify({
@@ -36,8 +36,11 @@ class APICommunicator {
         .then(resp => resp.json());
     };
 
-    removeFromCollection(collectionId) {
-      return fetch(this.endpoint + `collections/${collectionId}`, { method: "DELETE" })
+    removeFromCollection(userId, recordId) {
+      return fetch(this.endpoint + `collections/${recordId}/${userId}`, { 
+          method: "DELETE"
+         })
+         .then(resp => resp.json())
     };
 
     postToCollection(userId, recordId) {
@@ -48,7 +51,7 @@ class APICommunicator {
                 user_id: userId,
                 record_id: recordId
             })
-        })
+        });
     };
 
     getUser(userId){
