@@ -33,19 +33,19 @@ function renderAllRecords(){
 };
 
 function renderCollection(){
-  if(userRecords.length > 0){
+  // if(userRecords.length > 0){
     userRecords.forEach(userRecord => {
       renderRecord(userRecord, recordsContainer, true);
     })
-  } else {
-    API
-    .getUser(localStorage.getItem('userId'))
-    .then(user => {
-      user.records.forEach(userRecord => {
-        renderRecord(userRecord, recordsContainer, true);
-      });
-    });
-  };
+  // } else {
+    // API
+    // .getUser(localStorage.getItem('userId'))
+    // .then(user => {
+    //   user.records.forEach(userRecord => {
+    //     renderRecord(userRecord, recordsContainer, true);
+    //   });
+    // });
+  // };
 };
 
 function renderFilteredRecords(filtered){
@@ -90,7 +90,11 @@ function renderLogin() {
 
 //-----------EVENT LISTENERS------------------------//
 if(localStorage.userId){
-  renderAllRecords();
+  API.getUser(localStorage.userId)
+  .then(user => {
+    user.records.forEach(r => userRecords.push(r));
+    renderAllRecords();
+  })
 } else {
   renderLogin();
 };
@@ -103,6 +107,9 @@ recordsContainer.addEventListener('click', (e) => {
       if(data.message){
         alert(data.message);
       } else {
+
+        userRecords.push(data.record);
+        console.log(userRecords);
         alert("Added");
       }
     });
@@ -112,6 +119,7 @@ recordsContainer.addEventListener('click', (e) => {
     const recordId = e.target.dataset.recordId;
     API.removeFromCollection(localStorage.userId, recordId)
     .then(recordId => {
+      userRecords.splice(userRecords.findIndex(record => record.id === recordId));
       const recordDiv = document.querySelector(`[data-record-card-id='${recordId}']`);
       recordDiv.remove();
     });
@@ -149,7 +157,7 @@ formDiv.addEventListener('click', (e) => {
 
   if (e.target.innerText === "Create Record") {
     API.postRecord(title, artist, genre, image)
-      .then(record => renderRecord(record, recordsContainer))
+      .then(record => {renderRecord(record, recordsContainer)})
       document.querySelectorAll('[type="text"]')
       .forEach(input => input.value = "");
   }
