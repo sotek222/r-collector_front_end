@@ -43,12 +43,12 @@ body {
   }
 }
 
-
 .records-container {
   width: 75vw;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
+  padding-top: 56px;
 }
 
 .success-dialog {
