@@ -1,5 +1,5 @@
-import "../style/card.css";
-import colorRandomizer from './util';
+import "../styles/card.css";
+import { colorRandomizer } from '../src/utils';
 
 class Record {
   constructor({id, title, artist, genre, image_url}){

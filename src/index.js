@@ -1,8 +1,9 @@
 import APICommunicator from './services/adapter';
 import Record from './record';
 
-import '../style/login.css';
-import '../style/styles.css';
+import '../styles/login.css';
+import '../styles/styles.css';
+import '../styles/navigation.css'
 
 const API = new APICommunicator();
 // --------------- Selectors -----------------------------------//
