@@ -29,11 +29,8 @@ class Record {
             <h3 class="record-genre">${genre}</h3>
           </div>
           <button 
-            id="modal-success-button" 
             class="record-button" 
             data-record-id=${id} 
-            data-toggle="modal" 
-            data-target="#succesModal"
             data-action=${inCollection ? "remove-record" : "add-record"}>
             ${inCollection ? "Remove from Collection" : "Add to Collection"}
           </button>

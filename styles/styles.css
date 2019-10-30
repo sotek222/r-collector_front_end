@@ -51,16 +51,6 @@ body {
   padding-top: 56px;
 }
 
-.success-dialog {
-  margin-left: 41%;
-  margin-top: 15%;
-}
-
-.success-content {
-  width: 40%;
-  padding-bottom: 6%;
-}
-
 .logout {
   background-color: #8b0000;
   border-color: #8b0000;
@@ -69,12 +59,4 @@ body {
 .logout:hover {
   background-color: #5f0000;
   border-color: #5f0000;
-}
-
-/* CHECK START */
-
-svg {
-  width: 100px;
-  display: block;
-  margin: 40px auto 0;
 }

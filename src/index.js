@@ -98,15 +98,21 @@ if(localStorage.userId){
 recordsContainer.addEventListener('click', (e) => {
   if (e.target.dataset.action === "add-record") {
     const recordId = e.target.dataset.recordId;
-    API.postToCollection(localStorage.userId, recordId);
+    API.postToCollection(localStorage.userId, recordId)
+    .then(data => {
+      if(data.message){
+        alert(data.message);
+      } else {
+        alert("Added");
+      }
+    });
   };
 
   if(e.target.dataset.action === "remove-record"){ 
     const recordId = e.target.dataset.recordId;
     API.removeFromCollection(localStorage.userId, recordId)
     .then(recordId => {
-      const recordDiv = document.querySelector(`[data-record-card-id='${recordId}']`)
-      debugger;
+      const recordDiv = document.querySelector(`[data-record-card-id='${recordId}']`);
       recordDiv.remove();
     });
   };
