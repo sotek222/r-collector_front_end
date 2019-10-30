@@ -35,6 +35,11 @@ class APICommunicator {
         })
         .then(resp => resp.json());
     };
+    
+    getUser(userId){
+        return fetch(this.endpoint + `/users/${userId}`)
+        .then(resp => resp.json());
+    };
 
     removeFromCollection(userId, recordId) {
       return fetch(this.endpoint + `collections/${recordId}/${userId}`, { 
@@ -51,13 +56,11 @@ class APICommunicator {
                 user_id: userId,
                 record_id: recordId
             })
-        });
+        })
+        .then(resp => resp.json())
+        .catch(error => console.error(error))
     };
 
-    getUser(userId){
-        return fetch(this.endpoint + `/users/${userId}`)
-        .then(resp => resp.json());
-    };
 
 };
 
