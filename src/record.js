@@ -1,4 +1,5 @@
 import "../style/card.css";
+import colorRandomizer from './util';
 
 class Record {
   constructor({id, title, artist, genre, image_url}){
@@ -14,7 +15,7 @@ class Record {
   };
   
   renderCard(container){ 
-    const {id, title, artist, genre, image_url} = this;
+    const { id, title, artist, genre, image_url } = this;
     const html = `
       <div class="flip-card-inner">
         <div class="flip-card-front">
@@ -40,16 +41,19 @@ class Record {
      `;
 
     this.card = document.createElement('div');
-    this.card.className = "flip-card"
+    this.card.className = "flip-card";
     this.card.addEventListener('click', () => {
       if (this.card.classList.value.includes('flipped')){
-        this.card.classList.remove('flipped')
+        this.card.classList.remove('flipped');
       } else {
-        this.card.classList.add('flipped')
-      }
-    })
+        this.card.classList.add('flipped');
+        this.card.querySelector('.flip-card-back').style.background = `linear-gradient(-45deg, ${colorRandomizer()}, ${colorRandomizer()})`
+      };
+    });
+
     this.card.insertAdjacentHTML('beforeend', html);
     container.insertAdjacentElement('beforeend', this.card);
+
   }
   
 }

@@ -14,6 +14,7 @@ const modalBtn = document.getElementById('modal-button');
 const body = document.querySelector('body');
 const userRecords = [];
 let filtered;
+
 // ---------------- RENDERS -------------------------//
 
 
