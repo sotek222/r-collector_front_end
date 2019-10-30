@@ -1,28 +1,23 @@
 import APICommunicator from './services/adapter';
 import Record from './record';
-
+import {
+  renderRecord, 
+  navBar,
+  recordsContainer,
+  formDiv,
+  searchBar,
+  modalBtn,
+  body  
+} from './services/utils';
 import '../styles/login.css';
 import '../styles/styles.css';
 import '../styles/navigation.css'
 
 const API = new APICommunicator();
-// --------------- Selectors -----------------------------------//
-const recordsContainer = document.querySelector('.records-container');
-const navBar = document.querySelector('.nav-bar');
-const formDiv = document.querySelector('.new-record-form');
-const searchBar = document.getElementById('search-bar');
-const modalBtn = document.getElementById('modal-button');
-const body = document.querySelector('body');
 const userRecords = [];
 let filtered;
 
 // ---------------- RENDERS -------------------------//
-
-
-function renderRecord(record){
-  const newRecord = new Record(record);
-  newRecord.renderCard(recordsContainer);
-};
 
 function renderAllRecords(){
   navBar.style.display = "block";
@@ -32,7 +27,7 @@ function renderAllRecords(){
   API.fetchRecords()
   .then(records => {
     records.forEach(record => {
-      renderRecord(record)
+      renderRecord(record, recordsContainer)
     });
   });
 };
@@ -40,14 +35,14 @@ function renderAllRecords(){
 function renderCollection(){
   if(userRecords.length > 0){
     userRecords.forEach(userRecord => {
-      renderRecord(userRecord);
+      renderRecord(userRecord, recordsContainer);
     })
   } else {
     API
     .getUser(localStorage.getItem('userId'))
     .then(user => {
       user.records.forEach(userRecord => {
-        renderRecord(userRecord);
+        renderRecord(userRecord, recordsContainer);
       });
     });
   };
@@ -152,7 +147,7 @@ formDiv.addEventListener('click', (e) => {
 
   if (e.target.innerText === "Create Record") {
     API.postRecord(title, artist, genre, image)
-    .then(record => renderRecord(record))
+      .then(record => renderRecord(record, recordsContainer))
       document.querySelectorAll('[type="text"]')
       .forEach(input => input.value = "");
   }
