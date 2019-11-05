@@ -33,5 +33,8 @@ module.exports = {
           loader: 'url-loader'
       }
     ]
+  },
+  node: {
+    fs: "empty"
   }
 }
