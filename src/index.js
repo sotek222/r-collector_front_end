@@ -33,26 +33,12 @@ function renderAllRecords(){
 };
 
 function renderCollection(){
-  // if(userRecords.length > 0){
-    userRecords.forEach(userRecord => {
-      renderRecord(userRecord, recordsContainer, true);
-    })
-  // } else {
-    // API
-    // .getUser(localStorage.getItem('userId'))
-    // .then(user => {
-    //   user.records.forEach(userRecord => {
-    //     renderRecord(userRecord, recordsContainer, true);
-    //   });
-    // });
-  // };
+  userRecords.forEach(userRecord => renderRecord(userRecord, recordsContainer, true));
 };
 
 function renderFilteredRecords(filtered){
   recordsContainer.innerHTML = '';
-  filtered.forEach(record => {
-    record.renderCard(recordsContainer);
-  });
+  filtered.forEach(record => record.renderCard(recordsContainer));
 };
 
 
@@ -107,7 +93,6 @@ recordsContainer.addEventListener('click', (e) => {
       if(data.message){
         alert(data.message);
       } else {
-
         userRecords.push(data.record);
         console.log(userRecords);
         alert("Added");
