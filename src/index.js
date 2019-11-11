@@ -29,6 +29,26 @@ function renderAllRecords(){
   navBar.style.display = "block";
   recordsContainer.style.display = "flex";
   recordsContainer.innerHTML = '';
+  fetch("https://api.spotify.com/v1/me", {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": `Bearer ${spotifyApi.getAccessToken()}`
+    }
+  })
+    .then(resp => resp.json())
+    .then(data => {
+      navBar.querySelector('.text-white').insertAdjacentHTML('beforeend', `
+      <span class="spotify-span">
+        <p class="spotify-user-name">Logged in as ${data.display_name}</p>
+        <img 
+        class="spotify-avatar"
+        src=${data.images[0].url} alt="spotify profile image">
+      </span>
+      `)
+    })
+
   API.fetchRecords()
   .then(records => {
     records.forEach(record => {
