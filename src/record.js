@@ -28,6 +28,13 @@ class Record {
             <h2 class="record-artist">${artist}</h2>
             <h3 class="record-genre">${genre}</h3>
           </div>
+          ${inCollection ? 
+           `<button
+            class="record-button"
+            data-action="play-record">
+            ►
+            </button>`
+            : ""}
           <button 
             class="record-button" 
             data-record-id=${id} 

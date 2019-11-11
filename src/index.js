@@ -1,3 +1,5 @@
+const s = require('spotify-web-api-js');
+
 import APICommunicator from './services/adapter';
 import Record from './record';
 import {
@@ -11,11 +13,15 @@ import {
 } from './services/utils';
 import '../styles/login.css';
 import '../styles/styles.css';
-import '../styles/navigation.css'
+import '../styles/navigation.css';
 
+const spotifyApi = new s();
 const API = new APICommunicator();
 const userRecords = [];
 let filtered;
+
+const url = /\#(?:access_token)\=([\S\s]*?)\&/;
+const accessToken = url.test(window.location.href) ? window.location.href.match(url)[1] : null;
 
 // ---------------- RENDERS -------------------------//
 
@@ -23,7 +29,6 @@ function renderAllRecords(){
   navBar.style.display = "block";
   recordsContainer.style.display = "flex";
   recordsContainer.innerHTML = '';
-  
   API.fetchRecords()
   .then(records => {
     records.forEach(record => {
@@ -53,7 +58,6 @@ function renderLogin() {
   <h3 class="login-text">Log-in</h3>
   <input class="login-div" id="log-in" placeholder="Enter Email"></input>
   <button class="login-div" data-action="login">Log-in</button><br>
-  <div></div>
   `;
   body.appendChild(landing);
 
@@ -64,6 +68,7 @@ function renderLogin() {
 
       API.postUser(logInInput)
       .then(user => {
+        window.location.href = `https://accounts.spotify.com/authorize?client_id=${process.env["ClientID"]}&redirect_uri=http://localhost:8080/&scope=streaming%20user-read-private%20user-read-email%20user-library-read%20playlist-read-private&response_type=token&state=123&show_dialog=true`
         localStorage.userId = user.id;
         user.records.forEach(r => userRecords.push(r));
         landing.remove();
@@ -73,11 +78,37 @@ function renderLogin() {
   });
 };
 
+window.onSpotifyWebPlaybackSDKReady = () => {
+  const token = spotifyApi.getAccessToken();
+  const player = new Spotify.Player({
+    name: 'Web Playback SDK M-Collector',
+    getOAuthToken: cb => { cb(token); }
+  });
+
+  player.addListener('initialization_error', ({ message }) => { console.error(message); });
+  player.addListener('authentication_error', ({ message }) => { console.error(message); });
+  player.addListener('account_error', ({ message }) => { console.error(message); });
+  player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+  player.addListener('player_state_changed', state => { 
+    console.log("Name of current album:", state.context); 
+  });
+  player.addListener('ready', ({ device_id }) => {
+    console.log('Ready with Device ID', device_id);
+  });
+  player.addListener('not_ready', ({ device_id }) => {
+    console.log('Device ID has gone offline', device_id);
+  });
+  player.connect();
+};
+
+
 
 //-----------EVENT LISTENERS------------------------//
 if(localStorage.userId){
   API.getUser(localStorage.userId)
   .then(user => {
+    spotifyApi.setAccessToken(accessToken);
     user.records.forEach(r => userRecords.push(r));
     renderAllRecords();
   })
@@ -94,7 +125,6 @@ recordsContainer.addEventListener('click', (e) => {
         alert(data.message);
       } else {
         userRecords.push(data.record);
-        console.log(userRecords);
         alert("Added");
       }
     });
@@ -109,6 +139,36 @@ recordsContainer.addEventListener('click', (e) => {
       recordDiv.remove();
     });
   };
+
+  if(e.target.dataset.action === "play-record"){
+    const title = e.target.parentElement.querySelector('h1.record-title').innerText;
+    const artist = e.target.parentElement.querySelector('h2.record-artist').innerText;
+
+    fetch(`https://api.spotify.com/v1/search?q=album%3A${title}%20artist%3A${artist}&type=album`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${spotifyApi.getAccessToken()}`
+      }
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      const albumId = data.albums.items[0].id;
+      const iframe = recordsContainer.querySelector('iframe');
+      if (iframe){
+        iframe.remove();
+      }
+      recordsContainer.insertAdjacentHTML('beforeend', `
+      <iframe 
+        src="https://open.spotify.com/embed/album/${albumId}" 
+        width="300" height="380" frameborder="0" 
+        allowtransparency="true" 
+        allow="encrypted-media">
+      </iframe>
+      `);
+    }).catch(err => alert(err));
+  }
 });
 
 navBar.addEventListener('click', (e) => {
@@ -135,12 +195,12 @@ navBar.addEventListener('click', (e) => {
 // change to a submit event
 formDiv.addEventListener('click', (e) => {
   e.preventDefault();
-  const title = document.querySelector(".record-title").value;
-  const artist = document.querySelector(".record-artist").value;
-  const genre = document.querySelector(".record-genre").value;
-  const image = document.querySelector(".record-img").value;
-
   if (e.target.innerText === "Create Record") {
+    const {title, artist, genre, image} = 
+    Array.from(document.querySelectorAll('[type="text"]')).reduce((acc, cv) => {
+      acc[cv.name] = cv.value
+      return acc;
+    }, {});
     API.postRecord(title, artist, genre, image)
       .then(record => {renderRecord(record, recordsContainer)})
       document.querySelectorAll('[type="text"]')

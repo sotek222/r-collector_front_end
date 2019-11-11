@@ -8,6 +8,8 @@
 
 body {
   background-color: var(--body-bg);
+  overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
   /* background-image: url("/Users/home/Development/Projects/R-Collector/r-collector_front_end/assests/wood-panels.jpg"); */
   /* background-image: url("../assests/wood-panels.jpg"); */
 }
