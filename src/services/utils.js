@@ -17,6 +17,17 @@ function renderRecord(record, container, inCollection = false) {
   newRecord.renderCard(container);
 };
 
+function renderSpotifyUserInfo({display_name, images}){
+  navBar.querySelector('.text-white').insertAdjacentHTML('beforeend', `
+    <span class="spotify-span">
+      <p class="spotify-user-name">Logged in as ${display_name}</p>
+      <img 
+      class="spotify-avatar"
+      src=${images[0].url} alt="spotify profile image">
+    </span>
+    `);
+};
+
 export { 
   colorRandomizer, 
   renderRecord,
@@ -26,5 +37,6 @@ export {
   searchBar,
   modalBtn,
   body,
-  iframe
+  iframe,
+  renderSpotifyUserInfo
 }

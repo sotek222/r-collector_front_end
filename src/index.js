@@ -11,7 +11,8 @@ import {
   searchBar,
   modalBtn,
   body,
-  iframe  
+  iframe,
+  renderSpotifyUserInfo  
 } from './services/utils';
 // import Spotify 
 import {
@@ -42,17 +43,8 @@ function renderAllRecords(){
   const userSpan = document.querySelector('.spotify-span');
   if (!userSpan) {
     getSpotifyUserInfo()
-      .then(data => {
-        navBar.querySelector('.text-white').insertAdjacentHTML('beforeend', `
-        <span class="spotify-span">
-          <p class="spotify-user-name">Logged in as ${data.display_name}</p>
-          <img 
-          class="spotify-avatar"
-          src=${data.images[0].url} alt="spotify profile image">
-        </span>
-        `)
-      });
-  }
+      .then(userInfo => renderSpotifyUserInfo(userInfo));
+  };
 
   API.fetchRecords()
   .then(records => {
@@ -81,14 +73,15 @@ function renderLogin() {
   landing.innerHTML = `
   <h1 class="login-title">R-Collector</h1>
   <h3 class="login-text">Log-in</h3>
-  <input class="login-div" id="log-in" placeholder="Enter Email"></input>
-  <button class="login-div" data-action="login">Log-in</button><br>
+  <form>
+    <input type="text" class="login-div" id="log-in" placeholder="Enter Email"/>
+    <input type="submit" class="login-div" data-action="login" value="Log In" /><br>
+  </form>
   `;
   body.appendChild(landing);
 
 
-  landing.addEventListener('click', e => {
-    if (e.target.dataset.action === "login") {
+  landing.addEventListener('submit', e => {
       const logInInput = document.querySelector('#log-in').value;
 
       API.postUser(logInInput)
@@ -99,7 +92,6 @@ function renderLogin() {
         landing.remove();
         renderAllRecords();
       });
-    };
   });
 };
 
