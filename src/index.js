@@ -1,5 +1,3 @@
-const s = require('spotify-web-api-js');
-
 import APICommunicator from './services/adapter';
 import Record from './record';
 import {
@@ -11,17 +9,20 @@ import {
   modalBtn,
   body  
 } from './services/utils';
+import {
+  spotifyApi,
+  getSpotifyUserInfo,
+  getAlbum,
+  accessUrl,
+  accessToken
+} from './services/SpotifyApi';
 import '../styles/login.css';
 import '../styles/styles.css';
 import '../styles/navigation.css';
 
-const spotifyApi = new s();
 const API = new APICommunicator();
 const userRecords = [];
 let filtered;
-
-const url = /\#(?:access_token)\=([\S\s]*?)\&/;
-const accessToken = url.test(window.location.href) ? window.location.href.match(url)[1] : null;
 
 // ---------------- RENDERS -------------------------//
 
@@ -29,15 +30,8 @@ function renderAllRecords(){
   navBar.style.display = "block";
   recordsContainer.style.display = "flex";
   recordsContainer.innerHTML = '';
-  fetch("https://api.spotify.com/v1/me", {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": `Bearer ${spotifyApi.getAccessToken()}`
-    }
-  })
-    .then(resp => resp.json())
+
+  getSpotifyUserInfo()
     .then(data => {
       navBar.querySelector('.text-white').insertAdjacentHTML('beforeend', `
       <span class="spotify-span">
@@ -47,7 +41,7 @@ function renderAllRecords(){
         src=${data.images[0].url} alt="spotify profile image">
       </span>
       `)
-    })
+    });
 
   API.fetchRecords()
   .then(records => {
@@ -88,7 +82,7 @@ function renderLogin() {
 
       API.postUser(logInInput)
       .then(user => {
-        window.location.href = `https://accounts.spotify.com/authorize?client_id=${process.env["ClientID"]}&redirect_uri=http://localhost:8080/&scope=streaming%20user-read-private%20user-read-email%20user-library-read%20playlist-read-private&response_type=token&state=123&show_dialog=true`
+        window.location.href = accessUrl;
         localStorage.userId = user.id;
         user.records.forEach(r => userRecords.push(r));
         landing.remove();
@@ -97,32 +91,6 @@ function renderLogin() {
     };
   });
 };
-
-window.onSpotifyWebPlaybackSDKReady = () => {
-  const token = spotifyApi.getAccessToken();
-  const player = new Spotify.Player({
-    name: 'Web Playback SDK M-Collector',
-    getOAuthToken: cb => { cb(token); }
-  });
-
-  player.addListener('initialization_error', ({ message }) => { console.error(message); });
-  player.addListener('authentication_error', ({ message }) => { console.error(message); });
-  player.addListener('account_error', ({ message }) => { console.error(message); });
-  player.addListener('playback_error', ({ message }) => { console.error(message); });
-
-  player.addListener('player_state_changed', state => { 
-    console.log("Name of current album:", state.context); 
-  });
-  player.addListener('ready', ({ device_id }) => {
-    console.log('Ready with Device ID', device_id);
-  });
-  player.addListener('not_ready', ({ device_id }) => {
-    console.log('Device ID has gone offline', device_id);
-  });
-  player.connect();
-};
-
-
 
 //-----------EVENT LISTENERS------------------------//
 if(localStorage.userId){
@@ -163,32 +131,23 @@ recordsContainer.addEventListener('click', (e) => {
   if(e.target.dataset.action === "play-record"){
     const title = e.target.parentElement.querySelector('h1.record-title').innerText;
     const artist = e.target.parentElement.querySelector('h2.record-artist').innerText;
+    
+    getAlbum(title, artist)
+      .then(data => {
+        const albumId = data.albums.items[0].id;
+        const iframe = recordsContainer.querySelector('iframe');
 
-    fetch(`https://api.spotify.com/v1/search?q=album%3A${title}%20artist%3A${artist}&type=album`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": `Bearer ${spotifyApi.getAccessToken()}`
-      }
-    })
-    .then(resp => resp.json())
-    .then(data => {
-      const albumId = data.albums.items[0].id;
-      const iframe = recordsContainer.querySelector('iframe');
-      if (iframe){
-        iframe.remove();
-      }
-      recordsContainer.insertAdjacentHTML('beforeend', `
-      <iframe 
-        src="https://open.spotify.com/embed/album/${albumId}" 
-        width="300" height="380" frameborder="0" 
-        allowtransparency="true" 
-        allow="encrypted-media">
-      </iframe>
-      `);
-    }).catch(err => alert(err));
-  }
+        if (iframe) iframe.remove();
+
+        recordsContainer.insertAdjacentHTML('beforeend', `
+          <iframe 
+            src="https://open.spotify.com/embed/album/${albumId}" 
+            width="300" height="380" frameborder="0" 
+            allowtransparency="true" 
+            allow="encrypted-media">
+          </iframe>`);
+        }).catch(err => alert(err));
+  };
 });
 
 navBar.addEventListener('click', (e) => {
