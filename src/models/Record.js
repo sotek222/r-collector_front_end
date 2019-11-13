@@ -1,5 +1,5 @@
-import "../styles/card.css";
-import { colorRandomizer } from './services/utils';
+import "../../styles/card.css";
+import { colorRandomizer } from '../services/utils';
 
 class Record {
   constructor({id, title, artist, genre, image_url}, inCollection = false){
@@ -30,7 +30,7 @@ class Record {
           </div>
           ${inCollection ? 
            `<button
-            class="record-button"
+            class="record-button play"
             data-action="play-record">
             ►
             </button>`
@@ -47,12 +47,14 @@ class Record {
      
     this.card = document.createElement('div');
     this.card.className = "flip-card";
-    this.card.addEventListener('click', () => {
+
+    this.card.addEventListener('click', e => {
       if (this.card.classList.value.includes('flipped')){
         this.card.classList.remove('flipped');
       } else {
         this.card.classList.add('flipped');
-        this.card.querySelector('.flip-card-back').style.background = `linear-gradient(-45deg, ${colorRandomizer()}, ${colorRandomizer()})`
+        this.card.querySelector('.flip-card-back').style.background = `
+        linear-gradient(-45deg, ${colorRandomizer()}, ${colorRandomizer()})`;
       };
     });
 

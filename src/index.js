@@ -1,5 +1,8 @@
+// import the Rails Communicator
 import APICommunicator from './services/adapter';
-import Record from './record';
+// import the Record Model
+import Record from './models/Record';
+// import DOM Nodes
 import {
   renderRecord, 
   navBar,
@@ -7,8 +10,10 @@ import {
   formDiv,
   searchBar,
   modalBtn,
-  body  
+  body,
+  iframe  
 } from './services/utils';
+// import Spotify 
 import {
   spotifyApi,
   getSpotifyUserInfo,
@@ -16,9 +21,11 @@ import {
   accessUrl,
   accessToken
 } from './services/SpotifyApi';
+// import all Styles
 import '../styles/login.css';
 import '../styles/styles.css';
 import '../styles/navigation.css';
+import '../styles/spotify.css';
 
 const API = new APICommunicator();
 const userRecords = [];
@@ -28,20 +35,24 @@ let filtered;
 
 function renderAllRecords(){
   navBar.style.display = "block";
+  iframe.style.display = 'none';
   recordsContainer.style.display = "flex";
   recordsContainer.innerHTML = '';
-
-  getSpotifyUserInfo()
-    .then(data => {
-      navBar.querySelector('.text-white').insertAdjacentHTML('beforeend', `
-      <span class="spotify-span">
-        <p class="spotify-user-name">Logged in as ${data.display_name}</p>
-        <img 
-        class="spotify-avatar"
-        src=${data.images[0].url} alt="spotify profile image">
-      </span>
-      `)
-    });
+  
+  const userSpan = document.querySelector('.spotify-span');
+  if (!userSpan) {
+    getSpotifyUserInfo()
+      .then(data => {
+        navBar.querySelector('.text-white').insertAdjacentHTML('beforeend', `
+        <span class="spotify-span">
+          <p class="spotify-user-name">Logged in as ${data.display_name}</p>
+          <img 
+          class="spotify-avatar"
+          src=${data.images[0].url} alt="spotify profile image">
+        </span>
+        `)
+      });
+  }
 
   API.fetchRecords()
   .then(records => {
@@ -60,9 +71,9 @@ function renderFilteredRecords(filtered){
   filtered.forEach(record => record.renderCard(recordsContainer));
 };
 
-
 function renderLogin() {
   navBar.style.display = 'none';
+  iframe.style.display = 'none';
   recordsContainer.style.display = 'none';
 
   const landing = document.createElement('div');
@@ -99,7 +110,7 @@ if(localStorage.userId){
     spotifyApi.setAccessToken(accessToken);
     user.records.forEach(r => userRecords.push(r));
     renderAllRecords();
-  })
+  });
 } else {
   renderLogin();
 };
@@ -122,7 +133,8 @@ recordsContainer.addEventListener('click', (e) => {
     const recordId = e.target.dataset.recordId;
     API.removeFromCollection(localStorage.userId, recordId)
     .then(recordId => {
-      userRecords.splice(userRecords.findIndex(record => record.id === recordId));
+      const foundIndex = userRecords.findIndex(record => record.id === recordId);
+      userRecords.splice(foundIndex, 1);
       const recordDiv = document.querySelector(`[data-record-card-id='${recordId}']`);
       recordDiv.remove();
     });
@@ -131,22 +143,14 @@ recordsContainer.addEventListener('click', (e) => {
   if(e.target.dataset.action === "play-record"){
     const title = e.target.parentElement.querySelector('h1.record-title').innerText;
     const artist = e.target.parentElement.querySelector('h2.record-artist').innerText;
-    
+
     getAlbum(title, artist)
       .then(data => {
+        iframe.style.display = 'block';
         const albumId = data.albums.items[0].id;
-        const iframe = recordsContainer.querySelector('iframe');
-
-        if (iframe) iframe.remove();
-
-        recordsContainer.insertAdjacentHTML('beforeend', `
-          <iframe 
-            src="https://open.spotify.com/embed/album/${albumId}" 
-            width="300" height="380" frameborder="0" 
-            allowtransparency="true" 
-            allow="encrypted-media">
-          </iframe>`);
-        }).catch(err => alert(err));
+        iframe.src = `https://open.spotify.com/embed/album/${albumId}`
+      })
+      .catch(() => iframe.src = `https://open.spotify.com/embed/album/`);
   };
 });
 
