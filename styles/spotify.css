@@ -1,13 +1,23 @@
+.spotify-span {
+  background-color: #000000;
+  padding: 0 13px 0 15px;
+  border-radius: 10px;
+}
+
 .spotify-avatar {
   height: 50px;
   border-radius: 50%;
 }
 
 .spotify-user-name {
-  text-align: left;
   display: inline-block;
   vertical-align: middle;
-  max-width: 65%;
-  white-space: nowrap;
   font-size: 25%;
+}
+
+.web-player {
+  position: fixed;
+  top: 15%;
+  left: 70%;
+  border-radius: 5px;
 }

@@ -1,5 +1,8 @@
 :root {
-  --body-bg: #412c1f;
+  --body-bg: #000000;
+  --black-button: #000000;
+  --red-button: #8b0000;
+  --red-hover: #5f0000;
   --big-text: #ffffff;
   --card: #ffc600;
   --brown-button: #554544;
@@ -54,31 +57,11 @@ body {
 }
 
 .logout {
-  background-color: #8b0000;
-  border-color: #8b0000;
+  background-color:var(--red-button);
+  border-color: var(--red-button);
 }
 
 .logout:hover {
-  background-color: #5f0000;
-  border-color: #5f0000;
-}
-
-.spotify-span {
-  background-color: #000000;
-  padding: 5px;
-  border-radius: 10px;
-}
-
-.spotify-avatar {
-  height: 50px;
-  border-radius: 50%;
-}
-
-.spotify-user-name {
-  text-align: left;
-  display: inline-block;
-  vertical-align: middle;
-  max-width: 65%;
-  white-space: nowrap;
-  font-size: 25%;
+  background-color: var(--red-hover);
+  border-color: var(--red-hover);
 }

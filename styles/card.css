@@ -8,6 +8,21 @@
   border-color: var(--brown-button);
 }
 
+.record-button.play {
+  align-self: center;
+  width: 20%;
+  border-radius: 50%;
+  background-color: var(--black-button);
+  border-color: var(--black-button);
+}
+
+.record-button.play:hover {
+  width: 20%;
+  border-radius: 50%;
+  background-color: var(--card);
+  border-color: var(--card);
+}
+
 .record-button:hover {
   border-color: var(--hover-brown-button);
   background-color: var(--hover-brown-button);
