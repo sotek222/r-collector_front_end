@@ -1,6 +1,7 @@
 const SpotifyWebApi = require('spotify-web-api-js');
 
-const accessUrl = `https://accounts.spotify.com/authorize?client_id=${process.env["ClientID"]}&redirect_uri=http://localhost:8080/&scope=streaming%20user-read-private%20user-read-email%20user-library-read%20playlist-read-private&response_type=token&state=123&show_dialog=true`;
+const scopes = "streaming%20user-read-private%20user-read-email%20user-library-read%20playlist-read-private"
+const accessUrl = `https://accounts.spotify.com/authorize?client_id=${process.env["ClientID"]}&redirect_uri=http://localhost:8080/&scope=${scopes}&response_type=token&show_dialog=true`;
 const url = /\#(?:access_token)\=([\S\s]*?)\&/;
 const accessToken = url.test(window.location.href) ? window.location.href.match(url)[1] : null;
 const spotifyApi = new SpotifyWebApi();

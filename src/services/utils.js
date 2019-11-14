@@ -28,6 +28,19 @@ function renderSpotifyUserInfo({display_name, images}){
     `);
 };
 
+const loginHTML = `
+  <h1 class="login-title">R-Collector</h1>
+  <h3 class="login-text">Log-in</h3>
+  <form>
+    <input type="text" class="login-div" id="log-in" placeholder="Enter Email"/>
+    <br/>
+    <br/>
+    <input disabled type="text" class="login-div" id="password" placeholder="Enter Password"/>
+    <br/>
+    <br/>
+    <input type="submit" class="login-div" data-action="login" value="Log In" /><br>
+  </form>`
+
 export { 
   colorRandomizer, 
   renderRecord,
@@ -38,5 +51,6 @@ export {
   modalBtn,
   body,
   iframe,
-  renderSpotifyUserInfo
+  renderSpotifyUserInfo,
+  loginHTML
 }

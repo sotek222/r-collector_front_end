@@ -1,5 +1,5 @@
 // import the Rails Communicator
-import APICommunicator from './services/adapter';
+import APICommunicator from './services/Adapter';
 // import the Record Model
 import Record from './models/Record';
 // import DOM Nodes
@@ -12,7 +12,8 @@ import {
   modalBtn,
   body,
   iframe,
-  renderSpotifyUserInfo  
+  renderSpotifyUserInfo,
+  loginHTML  
 } from './services/utils';
 // import Spotify 
 import {
@@ -22,6 +23,7 @@ import {
   accessUrl,
   accessToken
 } from './services/SpotifyApi';
+
 // import all Styles
 import '../styles/login.css';
 import '../styles/styles.css';
@@ -65,23 +67,16 @@ function renderFilteredRecords(filtered){
 
 function renderLogin() {
   navBar.style.display = 'none';
-  iframe.style.display = 'none';
+  // iframe.style.display = 'none';
   recordsContainer.style.display = 'none';
 
   const landing = document.createElement('div');
   landing.setAttribute('class', 'landing');
-  landing.innerHTML = `
-  <h1 class="login-title">R-Collector</h1>
-  <h3 class="login-text">Log-in</h3>
-  <form>
-    <input type="text" class="login-div" id="log-in" placeholder="Enter Email"/>
-    <input type="submit" class="login-div" data-action="login" value="Log In" /><br>
-  </form>
-  `;
+  landing.insertAdjacentHTML('beforeend', loginHTML)
   body.appendChild(landing);
 
-
   landing.addEventListener('submit', e => {
+      e.preventDefault();
       const logInInput = document.querySelector('#log-in').value;
 
       API.postUser(logInInput)
@@ -91,7 +86,9 @@ function renderLogin() {
         user.records.forEach(r => userRecords.push(r));
         landing.remove();
         renderAllRecords();
-      });
+      }).catch(error => {
+        debugger;
+      })
   });
 };
 
