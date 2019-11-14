@@ -167,7 +167,6 @@ navBar.addEventListener('click', (e) => {
   }
 });
 
-// change to a submit event
 formDiv.addEventListener('click', (e) => {
   e.preventDefault();
   if (e.target.innerText === "Create Record") {
