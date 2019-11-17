@@ -67,7 +67,7 @@ function renderFilteredRecords(filtered){
 
 function renderLogin() {
   navBar.style.display = 'none';
-  // iframe.style.display = 'none';
+  iframe.style.display = 'none';
   recordsContainer.style.display = 'none';
 
   const landing = document.createElement('div');

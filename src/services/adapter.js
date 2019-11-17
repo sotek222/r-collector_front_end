@@ -1,5 +1,5 @@
 class APICommunicator {
-    constructor(endpoint = "http://localhost:3000/"){
+    constructor(endpoint = "http://localhost:3000/api/v1/"){
         this.endpoint = endpoint;
         this.headers = {
             'Accept': 'application/json',
@@ -22,7 +22,8 @@ class APICommunicator {
                 genre: genre,
                 image_url: image
             })
-        }).then(resp => resp.json())
+        })
+        .then(resp => resp.json());
     };
 
     postUser(email) {
@@ -45,7 +46,7 @@ class APICommunicator {
       return fetch(this.endpoint + `collections/${recordId}/${userId}`, { 
           method: "DELETE"
          })
-         .then(resp => resp.json())
+         .then(resp => resp.json());
     };
 
     postToCollection(userId, recordId) {
