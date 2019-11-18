@@ -2,7 +2,7 @@ const path = require("path");
 const Dotenv = require('dotenv-webpack');
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 
-module.exports = {
+const clientConfig = {
   mode: "development",
   devtool: "none",
   entry: "./src/index.js",
@@ -38,4 +38,6 @@ module.exports = {
       }
     ]
   }
-}
+};
+
+module.exports = clientConfig;
