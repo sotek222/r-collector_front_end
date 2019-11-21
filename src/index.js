@@ -33,10 +33,12 @@ import '../styles/spotify.css';
 const API = new APICommunicator();
 const userRecords = [];
 let filtered;
+let currentView;
 
 // ---------------- RENDERS -------------------------//
 
 function renderAllRecords(){
+  currentView = "all"
   navBar.style.display = "block";
   iframe.style.display = 'none';
   recordsContainer.style.display = "flex";
@@ -45,54 +47,63 @@ function renderAllRecords(){
   const userSpan = document.querySelector('.spotify-span');
   if (!userSpan) {
     getSpotifyUserInfo()
-      .then(userInfo => renderSpotifyUserInfo(userInfo));
+    .then(userInfo => renderSpotifyUserInfo(userInfo));
   };
-
+  
   API.fetchRecords()
-  .then(records => {
-    records.forEach(record => {
-      renderRecord(record, recordsContainer)
-    });
-  });
+  .then(records => records.forEach(record => renderRecord(record, recordsContainer)));
 };
 
 function renderCollection(){
+  currentView = "collection"
   userRecords.forEach(userRecord => renderRecord(userRecord, recordsContainer, true));
+};
+
+function filterRecords(records) {
+  const searchInput = searchBar.value.toLowerCase();
+  filtered = records.filter(({ title, artist, genre }) => {
+    return (title.toLowerCase().includes(searchInput)
+      || artist.toLowerCase().includes(searchBar.value.toLowerCase(searchInput))
+      || genre.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)))
+  });
+  renderFilteredRecords(filtered);
 };
 
 function renderFilteredRecords(filtered){
   recordsContainer.innerHTML = '';
-  filtered.forEach(record => record.renderCard(recordsContainer));
+  if(currentView === "collection"){
+    filtered.forEach(record => renderRecord(record, recordsContainer, true));
+  } else {
+    filtered.forEach(record => record.renderCard(recordsContainer));
+  }
 };
 
 function renderLogin() {
+  currentView = "login";
   navBar.style.display = 'none';
   iframe.style.display = 'none';
   recordsContainer.style.display = 'none';
 
   const landing = document.createElement('div');
   landing.setAttribute('class', 'landing');
-  landing.insertAdjacentHTML('beforeend', loginHTML)
+  landing.insertAdjacentHTML('beforeend', loginHTML);
   body.appendChild(landing);
 
   landing.addEventListener('submit', e => {
-      e.preventDefault();
-      const logInInput = document.querySelector('#log-in').value;
+    e.preventDefault();
+    const logInInput = document.querySelector('#log-in').value;
 
-      API.postUser(logInInput)
-      .then(user => {
-        window.location.href = accessUrl;
-        localStorage.userId = user.id;
-        user.records.forEach(r => userRecords.push(r));
-        landing.remove();
-        renderAllRecords();
-      }).catch(error => {
-        debugger;
-      })
+    API.postUser(logInInput)
+    .then(user => {
+      window.location.href = accessUrl;
+      localStorage.userId = user.id;
+      user.records.forEach(r => userRecords.push(r));
+      landing.remove();
+      renderAllRecords();
+    }).catch(error => console.error)
   });
 };
 
-//-----------EVENT LISTENERS------------------------//
 if(localStorage.userId){
   API.getUser(localStorage.userId)
   .then(user => {
@@ -104,6 +115,7 @@ if(localStorage.userId){
   renderLogin();
 };
 
+//-----------EVENT LISTENERS------------------------//
 recordsContainer.addEventListener('click', (e) => {
   if (e.target.dataset.action === "add-record") {
     const recordId = e.target.dataset.recordId;
@@ -117,7 +129,7 @@ recordsContainer.addEventListener('click', (e) => {
       }
     });
   };
-
+  
   if(e.target.dataset.action === "remove-record"){ 
     const recordId = e.target.dataset.recordId;
     API.removeFromCollection(localStorage.userId, recordId)
@@ -128,14 +140,15 @@ recordsContainer.addEventListener('click', (e) => {
       recordDiv.remove();
     });
   };
-
+  
   if(e.target.dataset.action === "play-record"){
+    e.stopPropagation();
     const title = e.target.parentElement.querySelector('h1.record-title').innerText;
     const artist = e.target.parentElement.querySelector('h2.record-artist').innerText;
-
+    
     getAlbum(title, artist)
-      .then(data => {
-        iframe.style.display = 'block';
+    .then(data => {
+      iframe.style.display = 'block';
         const albumId = data.albums.items[0].id;
         iframe.src = `https://open.spotify.com/embed/album/${albumId}`
       })
@@ -184,12 +197,9 @@ formDiv.addEventListener('click', (e) => {
 });
 
 searchBar.addEventListener('input', (e) => {
-  const searchInput = searchBar.value.toLowerCase();
-  filtered = Record.all.filter(({ title, artist, genre}) => {
-    return (title.toLowerCase().includes(searchInput) 
-    || artist.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)) 
-    || genre.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)))
-  });
-
-  renderFilteredRecords(filtered);
+  if(currentView === "collection"){
+    filterRecords(userRecords);
+  } else {
+    filterRecords(Record.all)
+  }
 });

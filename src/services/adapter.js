@@ -1,11 +1,11 @@
 class APICommunicator {
     constructor(endpoint = "http://localhost:3000/api/v1/"){
-        this.endpoint = endpoint;
-        this.headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        };
-    }
+      this.endpoint = endpoint;
+      this.headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+  }
 
     fetchRecords(){
         return fetch(this.endpoint + "records")
