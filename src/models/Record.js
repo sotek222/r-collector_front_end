@@ -49,6 +49,7 @@ class Record {
     this.card.className = "flip-card";
 
     this.card.addEventListener('click', e => {
+
       if (this.card.classList.value.includes('flipped')){
         this.card.classList.remove('flipped');
       } else {

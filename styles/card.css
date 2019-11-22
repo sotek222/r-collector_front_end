@@ -40,6 +40,7 @@
   perspective: 1000px;
   display: flex;
   flex-flow: column nowrap;
+  transition: transform 1.5s;
 }
 
 /* This container is needed to position the front and back side */
@@ -55,6 +56,10 @@
 /* Do an horizontal flip when you click the flip box container */
 .flipped .flip-card-inner {
   transform: rotateY(180deg);
+}
+
+.rotate {
+  transform: rotateZ(360deg);
 }
 
 /* Position the front and back side */

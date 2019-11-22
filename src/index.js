@@ -97,14 +97,14 @@ function renderLogin() {
     .then(user => {
       window.location.href = accessUrl;
       localStorage.userId = user.id;
-      user.records.forEach(r => userRecords.push(r));
+      user.records.forEach(record => userRecords.push(record));
       landing.remove();
       renderAllRecords();
     }).catch(error => console.error)
   });
 };
 
-if(localStorage.userId){
+if (localStorage.userId){
   API.getUser(localStorage.userId)
   .then(user => {
     spotifyApi.setAccessToken(accessToken);
@@ -124,8 +124,8 @@ recordsContainer.addEventListener('click', (e) => {
       if(data.message){
         alert(data.message);
       } else {
+        e.target.parentElement.parentElement.parentElement.classList.add('rotate');
         userRecords.push(data.record);
-        alert("Added");
       }
     });
   };
