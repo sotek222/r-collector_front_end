@@ -1,11 +1,11 @@
 # R-Collector Front-end
 In this repository, you will find the frontend for this project built with Javascript. The Rails backend is located: [here](https://github.com/sotek222/r-collector_back_end)
 
-## 📌 Features:
+## ⚡️ Features:
 * R-Collector is a single page music user interface application intended for spotify users.
 <!-- * [Demo link]() -->
 
-## 🛠 Built With
+## ⚒ Built With
 * [Javascript](https://www.javascript.com/) - Vanilla JS
 * [NPM](https://www.npmjs.com/) - Package manager for the JavaScript programming language.
 * [Ruby on Rails](https://rubyonrails.org/) - The server-side web application framework
@@ -44,13 +44,13 @@ Fork and clone the front end repo:
 - Ruby 2.0.0, 2.1.x, 2.2.x, 2.3.x
 - We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
-## 🤩 Contributing
+## 🌎 Contributing
 
 Contributions are welcomed!  Fork, fix, then send a pull request.
 
 Bug reports and pull requests are welcome on GitHub at [r-collector repo](https://github.com/sotek222/r-collector_front_end), please open Issues to provide feedback.
 
-## ✏️ Authors
+## 📚 Authors
 
 * **Matthew Masiello** - [Matthew Masiello]()
 * **Farhan Mahmud** - [Farhan Mahmud]()
