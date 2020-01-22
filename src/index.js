@@ -20,6 +20,7 @@ import {
   spotifyApi,
   getSpotifyUserInfo,
   getAlbum,
+  getPlaylists,
   accessUrl,
   accessToken
 } from './services/SpotifyApi';

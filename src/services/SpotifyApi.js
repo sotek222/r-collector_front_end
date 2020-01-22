@@ -1,6 +1,6 @@
 const SpotifyWebApi = require('spotify-web-api-js');
 
-const scopes = "streaming%20user-read-private%20user-read-email%20user-library-read%20playlist-read-private"
+const scopes = "streaming%20user-read-private%20user-read-email%20user-library-read%20playlist-read-private%20playlist-read-collaborative"
 const accessUrl = `https://accounts.spotify.com/authorize?client_id=${process.env["ClientID"]}&redirect_uri=http://localhost:8080/&scope=${scopes}&response_type=token&show_dialog=false`;
 const url = /\#(?:access_token)\=([\S\s]*?)\&/;
 const accessToken = url.test(window.location.href) ? window.location.href.match(url)[1] : null;
@@ -31,6 +31,18 @@ function getAlbum(title, artist){
   .then(resp => resp.json())
 };
 
+function getPlaylists(){
+  return fetch("https://api.spotify.com/v1/me/playlists", {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": `Bearer ${spotifyApi.getAccessToken()}`
+    }
+  })
+  .then(resp => resp.json())
+}
+
 window.onSpotifyWebPlaybackSDKReady = () => {
   const token = spotifyApi.getAccessToken();
   const player = new Spotify.Player({
@@ -59,6 +71,7 @@ export {
   spotifyApi,
   getSpotifyUserInfo,
   getAlbum,
+  getPlaylists,
   accessUrl,
   accessToken
 }
