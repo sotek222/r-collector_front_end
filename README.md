@@ -52,5 +52,5 @@ Bug reports and pull requests are welcome on GitHub at [r-collector repo](https:
 
 ## 📚 Authors
 
-* **Matthew Masiello** - [Matthew Masiello]()
-* **Farhan Mahmud** - [Farhan Mahmud]()
+* **Matthew Masiello** - [Matthew Masiello](https://github.com/sotek222)
+* **Farhan Mahmud** - [Farhan Mahmud](https://github.com/farhanmahmoodny)
