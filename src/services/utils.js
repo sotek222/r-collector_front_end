@@ -1,10 +1,10 @@
-const recordsContainer = document.querySelector('.records-container'),
-navBar = document.querySelector('.nav-bar'),
-formDiv = document.querySelector('.new-record-form'),
-searchBar = document.getElementById('search-bar'),
-modalBtn = document.getElementById('modal-button'),
-body = document.querySelector('body'),
-iframe = document.querySelector('.web-player');
+const recordsContainer = document.querySelector('.records-container');
+const navBar = document.querySelector('.nav-bar');
+const formDiv = document.querySelector('.new-record-form');
+const searchBar = document.getElementById('search-bar');
+const modalBtn = document.getElementById('modal-button');
+const body = document.querySelector('body');
+const iframe = document.querySelector('.web-player');
 
 function colorRandomizer() {
   return `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
