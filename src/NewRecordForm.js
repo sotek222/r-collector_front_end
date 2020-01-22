@@ -1,19 +1,26 @@
 import APICommunicator from './services/Adapter';
+import Record from './models/Record';
 const API = new APICommunicator();
 
 class NewRecordForm {
 
   handleClick(div){
     div.addEventListener('click', (e) => {
+      // This is used to prevent the default behaviour of the form 
       e.preventDefault();
       if (e.target.innerText === "Create Record") {
         const { title, artist, genre, image } =
-          Array.from(document.querySelectorAll('[type="text"]')).reduce((acc, cv) => {
+          Array.from(document.querySelectorAll('[type="text"]'))
+          .reduce((acc, cv) => {
             acc[cv.name] = cv.value
             return acc;
           }, {});
         API.postRecord(title, artist, genre, image)
-          .then(record => { renderRecord(record, recordsContainer) })
+          .then((record) => {   
+            const newRecord = new Record(record);
+            const recordContainer = document.querySelector('.records-container');
+            newRecord.renderCard(recordContainer);
+          })
         document.querySelectorAll('[type="text"]')
           .forEach(input => input.value = "");
       }
