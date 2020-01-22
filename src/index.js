@@ -6,7 +6,7 @@ import Record from './models/Record';
 import { 
   navBar,
   recordsContainer,
-  formDiv,
+  // formDiv,
   searchBar,
   modalBtn,
   iframe,
@@ -29,9 +29,11 @@ import '../styles/login.css';
 import '../styles/styles.css';
 import '../styles/navigation.css';
 import '../styles/spotify.css';
+import NewRecordForm from './NewRecordForm';
 
 const API = new APICommunicator();
 const userRecords = [];
+const formDiv = new NewRecordForm();
 let filtered;
 let currentView;
 
@@ -182,24 +184,7 @@ navBar.addEventListener('click', (e) => {
   }
 });
 
-formDiv.addEventListener('click', (e) => {
-  e.preventDefault();
-  if (e.target.innerText === "Create Record") {
-    const {title, artist, genre, image} = 
-    Array.from(document.querySelectorAll('[type="text"]')).reduce((acc, cv) => {
-      acc[cv.name] = cv.value
-      return acc;
-    }, {});
-    API.postRecord(title, artist, genre, image)
-      .then(record => {renderRecord(record, recordsContainer)})
-      document.querySelectorAll('[type="text"]')
-      .forEach(input => input.value = "");
-  }
-  if(e.target.innerText === "Close") {
-    document.querySelectorAll('[type="text"]')
-      .forEach(input => input.value = "");
-  }
-});
+formDiv.render();
 
 searchBar.addEventListener('input', (e) => {
   if(currentView === "collection"){
