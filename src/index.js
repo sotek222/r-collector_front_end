@@ -1,14 +1,17 @@
 // import the Rails Communicator
 import APICommunicator from './services/Adapter';
+
 // import the Record Model
 import Record from './models/Record';
+
+// import Record Form for adding a new Record
+import NewRecordForm from './NewRecordForm';
+
 // import DOM Nodes
 import { 
   navBar,
   recordsContainer,
-  // formDiv,
   searchBar,
-  modalBtn,
   iframe,
   renderSpotifyUserInfo,
   loginHTML  
@@ -29,11 +32,10 @@ import '../styles/login.css';
 import '../styles/styles.css';
 import '../styles/navigation.css';
 import '../styles/spotify.css';
-import NewRecordForm from './NewRecordForm';
+
 
 const API = new APICommunicator();
 const userRecords = [];
-const formDiv = new NewRecordForm();
 let filtered;
 let currentView;
 
@@ -70,8 +72,8 @@ function filterRecords(records) {
   const searchInput = searchBar.value.toLowerCase();
   filtered = records.filter(({ title, artist, genre }) => {
     return (title.toLowerCase().includes(searchInput)
-      || artist.toLowerCase().includes(searchBar.value.toLowerCase(searchInput))
-      || genre.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)))
+    || artist.toLowerCase().includes(searchBar.value.toLowerCase(searchInput))
+    || genre.toLowerCase().includes(searchBar.value.toLowerCase(searchInput)))
   });
   renderFilteredRecords(filtered);
 };
@@ -85,8 +87,11 @@ function renderFilteredRecords(filtered){
   }
 };
 
+const formDiv = new NewRecordForm();
+formDiv.render();
+
 function renderLogin() {
-  currentView = "login";
+  currentView = 'login';
   navBar.style.display = 'none';
   iframe.style.display = 'none';
   recordsContainer.style.display = 'none';
@@ -95,11 +100,11 @@ function renderLogin() {
   landing.setAttribute('class', 'landing');
   landing.insertAdjacentHTML('beforeend', loginHTML);
   document.body.appendChild(landing);
-
+  
   landing.addEventListener('submit', e => {
     e.preventDefault();
     const logInInput = document.querySelector('#log-in').value;
-
+    
     API.postUser(logInInput)
     .then(user => {
       window.location.href = accessUrl;
@@ -156,40 +161,39 @@ recordsContainer.addEventListener('click', (e) => {
     getAlbum(title, artist)
     .then(data => {
       iframe.style.display = 'block';
-        const albumId = data.albums.items[0].id;
+      const albumId = data.albums.items[0].id;
         iframe.src = `https://open.spotify.com/embed/album/${albumId}`
       })
       .catch(() => iframe.src = `https://open.spotify.com/embed/album/`);
-  };
-});
-
-navBar.addEventListener('click', (e) => {
-  if (e.target.innerText === 'My Collection') {
-    recordsContainer.innerHTML = '';
-    renderCollection();
-  } else if (e.target.innerText === 'All Records') {
-    renderAllRecords();
-  };
-
-  if (e.target.dataset.action === 'flip'){
+    };
+  });
+  
+  navBar.addEventListener('click', (e) => {
+    if (e.target.innerText === 'My Collection') {
+      recordsContainer.innerHTML = '';
+      renderCollection();
+    } else if (e.target.innerText === 'All Records') {
+      renderAllRecords();
+    };
+    
+    if (e.target.dataset.action === 'flip'){
       const cards = document.querySelectorAll(".flip-card");
       cards.forEach(card => {
         card.classList.remove('flipped');
       });
-  };
-
-  if(e.target.dataset.action === "logout"){
-    localStorage.removeItem("userId");
-    renderLogin();
-  }
-});
-
-formDiv.render();
-
-searchBar.addEventListener('input', (e) => {
-  if(currentView === "collection"){
-    filterRecords(userRecords);
-  } else {
-    filterRecords(Record.all)
-  }
-});
+    };
+    
+    if(e.target.dataset.action === "logout"){
+      localStorage.removeItem("userId");
+      renderLogin();
+    }
+  });
+  
+  
+  searchBar.addEventListener('input', (e) => {
+    if(currentView === "collection"){
+      filterRecords(userRecords);
+    } else {
+      filterRecords(Record.all)
+    }
+  });
