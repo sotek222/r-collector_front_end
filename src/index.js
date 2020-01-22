@@ -9,11 +9,11 @@ import {
   formDiv,
   searchBar,
   modalBtn,
-  body,
   iframe,
   renderSpotifyUserInfo,
   loginHTML  
 } from './services/utils';
+
 // import Spotify 
 import {
   spotifyApi,
@@ -92,7 +92,7 @@ function renderLogin() {
   const landing = document.createElement('div');
   landing.setAttribute('class', 'landing');
   landing.insertAdjacentHTML('beforeend', loginHTML);
-  body.appendChild(landing);
+  document.body.appendChild(landing);
 
   landing.addEventListener('submit', e => {
     e.preventDefault();

@@ -3,7 +3,6 @@ const navBar = document.querySelector('.nav-bar');
 const formDiv = document.querySelector('.new-record-form');
 const searchBar = document.getElementById('search-bar');
 const modalBtn = document.getElementById('modal-button');
-const body = document.querySelector('body');
 const iframe = document.querySelector('.web-player');
 
 function colorRandomizer() {
@@ -32,7 +31,7 @@ const loginHTML = `
     <br/>
     <br/>
     <input type="submit" class="login-div" data-action="login" value="Log In" /><br>
-  </form>`
+  </form>`;
 
 export { 
   colorRandomizer, 
@@ -41,7 +40,6 @@ export {
   formDiv,
   searchBar,
   modalBtn,
-  body,
   iframe,
   renderSpotifyUserInfo,
   loginHTML
