@@ -1,6 +1,5 @@
 const recordsContainer = document.querySelector('.records-container');
 const navBar = document.querySelector('.nav-bar');
-const formDiv = document.querySelector('.new-record-form');
 const searchBar = document.getElementById('search-bar');
 const modalBtn = document.getElementById('modal-button');
 const iframe = document.querySelector('.web-player');
@@ -37,7 +36,6 @@ export {
   colorRandomizer, 
   recordsContainer,
   navBar,
-  formDiv,
   searchBar,
   modalBtn,
   iframe,
