@@ -3,8 +3,7 @@ import APICommunicator from './services/Adapter';
 // import the Record Model
 import Record from './models/Record';
 // import DOM Nodes
-import {
-  renderRecord, 
+import { 
   navBar,
   recordsContainer,
   formDiv,
@@ -37,6 +36,11 @@ let filtered;
 let currentView;
 
 // ---------------- RENDERS -------------------------//
+
+function renderRecord(record, container, inCollection = false) {
+  const newRecord = new Record(record, inCollection);
+  newRecord.renderCard(container);
+};
 
 function renderAllRecords(){
   currentView = "all"

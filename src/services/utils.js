@@ -1,5 +1,3 @@
-import Record from '../models/Record';
-
 const recordsContainer = document.querySelector('.records-container'),
 navBar = document.querySelector('.nav-bar'),
 formDiv = document.querySelector('.new-record-form'),
@@ -10,11 +8,6 @@ iframe = document.querySelector('.web-player');
 
 function colorRandomizer() {
   return `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
-};
-
-function renderRecord(record, container, inCollection = false) {
-  const newRecord = new Record(record, inCollection);
-  newRecord.renderCard(container);
 };
 
 function renderSpotifyUserInfo({display_name, images}){
@@ -43,7 +36,6 @@ const loginHTML = `
 
 export { 
   colorRandomizer, 
-  renderRecord,
   recordsContainer,
   navBar,
   formDiv,
