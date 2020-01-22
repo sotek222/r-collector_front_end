@@ -1,11 +1,13 @@
 const recordsContainer = document.querySelector('.records-container');
 const navBar = document.querySelector('.nav-bar');
 const searchBar = document.getElementById('search-bar');
-const modalBtn = document.getElementById('modal-button');
 const iframe = document.querySelector('.web-player');
 
 function colorRandomizer() {
-  return `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+  return `rgb(
+    ${Math.floor(Math.random() * 255)}, 
+    ${Math.floor(Math.random() * 255)}, 
+    ${Math.floor(Math.random() * 255)})`;
 };
 
 function renderSpotifyUserInfo({display_name, images}){
@@ -37,7 +39,6 @@ export {
   recordsContainer,
   navBar,
   searchBar,
-  modalBtn,
   iframe,
   renderSpotifyUserInfo,
   loginHTML
