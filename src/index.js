@@ -7,6 +7,9 @@ import Record from './models/Record';
 // import Record Form for adding a new Record
 import NewRecordForm from './NewRecordForm';
 
+// import Login form for adding user login before landing
+import LoginForm from './LoginForm';
+
 // import DOM Nodes
 import { 
   navBar,
@@ -14,7 +17,6 @@ import {
   searchBar,
   iframe,
   renderSpotifyUserInfo,
-  loginHTML  
 } from './services/utils';
 
 // import Spotify 
@@ -87,34 +89,30 @@ function renderFilteredRecords(filtered){
   }
 };
 
-const formDiv = new NewRecordForm();
-formDiv.render();
-
-function renderLogin() {
+function renderLogin(){
   currentView = 'login';
   navBar.style.display = 'none';
   iframe.style.display = 'none';
   recordsContainer.style.display = 'none';
 
-  const landing = document.createElement('div');
-  landing.setAttribute('class', 'landing');
-  landing.insertAdjacentHTML('beforeend', loginHTML);
-  document.body.appendChild(landing);
-  
-  landing.addEventListener('submit', e => {
+  loginForm.render()
+  loginForm.div.addEventListener('submit', e => {
     e.preventDefault();
     const logInInput = document.querySelector('#log-in').value;
-    
-    API.postUser(logInInput)
-    .then(user => {
-      window.location.href = accessUrl;
-      localStorage.userId = user.id;
-      user.records.forEach(record => userRecords.push(record));
-      landing.remove();
-      renderAllRecords();
-    }).catch(error => console.error)
+    loginForm.handleSubmit(logInInput)
+      .then(user => {
+        window.location.href = accessUrl;
+        localStorage.userId = user.id;
+        user.records.forEach(record => userRecords.push(record));
+        landing.remove();
+        renderAllRecords();
+      }).catch(error => console.error)
   });
-};
+}
+
+const formDiv = new NewRecordForm();
+formDiv.render();
+const loginForm = new LoginForm();
 
 if (localStorage.userId){
   API.getUser(localStorage.userId)
